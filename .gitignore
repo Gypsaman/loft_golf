@@ -1,4 +1,4 @@
 .env
-venv/
-instance/
-logs/
+venv
+instance
+logs
