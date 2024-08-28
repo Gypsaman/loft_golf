@@ -42,23 +42,34 @@ class TeeTimePlayers(db.Model):
     def __repr__(self):
         return f'Player: {self.player.first_name} {self.player.last_name} Tee Time: {self.tee_time.time}'
 
+# class TeeRequests(db.Model):
+#     __tablename__ = 'teerequests'
+#     id = db.Column(db.Integer, primary_key=True)
+#     player_id = db.Column(db.Integer, db.ForeignKey('players.id'))
+#     week_id = db.Column(db.Integer, db.ForeignKey('weeks.id'))
+#     Monday = db.Column(db.Boolean, nullable=False)
+#     Tuesday = db.Column(db.Boolean, nullable=False)
+#     Wednesday = db.Column(db.Boolean, nullable=False)
+#     Thursday = db.Column(db.Boolean, nullable=False)
+#     Friday = db.Column(db.Boolean, nullable=False)
+#     Saturday = db.Column(db.Boolean, nullable=False)
+#     Sunday = db.Column(db.Boolean, nullable=False)
+#     player = db.relationship('Players', backref='teerequests')
+#     week = db.relationship('Weeks', backref='teerequests')
+
+#     def __repr__(self):
+#         return f'Player: {self.player.first_name} Week: {self.week.start_date.strftime("%b-%d")} Monday: {self.Monday}, Tuesday: {self.Tuesday}, Wednesday: {self.Wednesday}, Thursday: {self.Thursday}, Friday: {self.Friday}, Saturday: {self.Saturday}, Sunday: {self.Sunday}'
+
 class TeeRequests(db.Model):
     __tablename__ = 'teerequests'
     id = db.Column(db.Integer, primary_key=True)
     player_id = db.Column(db.Integer, db.ForeignKey('players.id'))
     week_id = db.Column(db.Integer, db.ForeignKey('weeks.id'))
-    Monday = db.Column(db.Boolean, nullable=False)
-    Tuesday = db.Column(db.Boolean, nullable=False)
-    Wednesday = db.Column(db.Boolean, nullable=False)
-    Thursday = db.Column(db.Boolean, nullable=False)
-    Friday = db.Column(db.Boolean, nullable=False)
-    Saturday = db.Column(db.Boolean, nullable=False)
-    Sunday = db.Column(db.Boolean, nullable=False)
+    date_requested = db.Column(db.DateTime, nullable=False)
+    processed = db.Column(db.Boolean, nullable=False)
     player = db.relationship('Players', backref='teerequests')
     week = db.relationship('Weeks', backref='teerequests')
-
-    def __repr__(self):
-        return f'Player: {self.player.first_name} Week: {self.week.start_date.strftime("%b-%d")} Monday: {self.Monday}, Tuesday: {self.Tuesday}, Wednesday: {self.Wednesday}, Thursday: {self.Thursday}, Friday: {self.Friday}, Saturday: {self.Saturday}, Sunday: {self.Sunday}'
+    
 
 class Weeks(db.Model):
     __tablename__ = 'weeks'

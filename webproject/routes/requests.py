@@ -7,6 +7,7 @@ from datetime import timedelta
 from collections import Counter
 from sqlalchemy import func
 from webproject.modules.table_creator import Field, TableCreator, true_false, time_to_day_time
+from webproject.modules import messaging
 
 
 requests = Blueprint('requests', __name__)
@@ -64,6 +65,7 @@ def update_request_post(id):
     tee_request.Saturday = True if request.form.get('saturday') else False
     tee_request.Sunday = True if request.form.get('sunday') else False
     db.session.commit()
+    messaging.submission_received(tee_request)
     return redirect(url_for('requests.thank_you'))
 
 @requests.route('/requests/thank_you')
