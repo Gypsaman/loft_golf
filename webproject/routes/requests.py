@@ -1,7 +1,7 @@
 from flask import Blueprint, redirect, render_template,  request, url_for, flash
 from flask_login import login_required
 from webproject.modules.extensions import db
-from webproject.models import TeeTimes, Weeks, Players, TeeRequests
+from webproject.models import TeeTimes, Weeks, Players, TeeRequests, TeeTimePlayers
 from datetime import datetime as dt
 from datetime import timedelta
 from collections import Counter
@@ -11,7 +11,7 @@ from webproject.modules.table_creator import Field, TableCreator, true_false, ti
 
 requests = Blueprint('requests', __name__)
 
-day_order = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
+day_order = ['Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday','Monday']
 
 @requests.route('/requests/<access_code>')
 def player_request(access_code):
@@ -71,18 +71,26 @@ def thank_you():
     return render_template("requests/thank_you.html")
 
 
-@requests.route('/requests/generate')
+@requests.route('/requests/generate/<category>')
 @login_required
-def generate_requests():
+def generate_requests(category):
     curr_week = Weeks.query.filter(Weeks.closed==False).order_by(Weeks.start_date).first()
-    for idx,day in enumerate(day_order):
+    days_used = day_order[:4] if category == 'weekday' else day_order[4:]
+    for idx,day in enumerate(days_used):
         start_date = curr_week.start_date + timedelta(days=idx)
         end_date = curr_week.start_date + timedelta(days=idx+1)
-        print(start_date, end_date)
-        tee_requests = TeeRequests.query.filter(TeeRequests.week_id==curr_week.id,getattr(TeeRequests,day)==True).all()
+        tee_requests = [r.player_id for r in TeeRequests.query.filter(TeeRequests.week_id==curr_week.id,getattr(TeeRequests,day)==True).all()]
+        groups = group_requests(tee_requests)
         tee_times = TeeTimes.query.filter(TeeTimes.week_id==curr_week.id,TeeTimes.time >= start_date, TeeTimes.time < end_date).all()
-
-    return redirect(url_for('requests.view_requests'))
+        for idx,tee_time in enumerate(tee_times):
+            if idx >= len(groups):
+                break
+            group = groups[idx]
+            for player in group:
+                tee_time_player = TeeTimePlayers(player_id=player,tee_time_id=tee_time.id)
+                db.session.add(tee_time_player)
+        db.session.commit()
+    return redirect(url_for('teetimes.pairings',page=1))
 
 
 @requests.route('/requests')
@@ -125,3 +133,29 @@ def get_committed_requests(week_id):
     ).filter(TeeRequests.week_id == week_id).all()
 
     return result[0]
+
+def group_requests(players):
+    import random
+    player_groups = {
+        12:[4,4,4],
+        11:[3,4,4],
+        10:[2,4,4],
+        9:[3,3,3],
+        8:[2,3,3],
+        7:[3,4],
+        6:[3,3],
+        5:[2,3],
+    }
+
+    num_players = len(players)
+    if num_players < 5:
+        return players
+    groups = []
+    for qty in player_groups[num_players][:-1]:
+        group = random.sample(players,qty)
+        groups.append(group)
+        for player in group:
+            players.remove(player)
+    groups.append(players)
+
+    return groups

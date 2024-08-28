@@ -1,8 +1,8 @@
 from flask import Blueprint, redirect, render_template,  request, url_for, flash
 from flask_login import login_required
 from webproject.modules.extensions import db
-from webproject.models import TeeTimes, Weeks, TeeTimePlayers
-from webproject.modules.table_creator import TableCreator, Field, time_to_day_time
+from webproject.models import TeeTimes, Weeks, TeeTimePlayers, Players
+from webproject.modules.table_creator import TableCreator, Field, time_to_day_time, time_to_hourminute, time_to_day_date
 from datetime import datetime as dt
 
 
@@ -60,18 +60,24 @@ def delete_teetime(id):
     return redirect(url_for('weeks.update_week',id=week_id))
 
 
-@teetimes.route('/pairings')
+@teetimes.route('/pairings/<int:page>')
 @login_required
-def pairings():
+def pairings(page):
     curr_week = Weeks.query.filter(Weeks.closed==False).order_by(Weeks.start_date).first()
-    teetimes = [tee.id for tee in TeeTimes.query.filter_by(week_id=curr_week.id).all()]
-    groupings = TeeTimePlayers.query.filter(TeeTimePlayers.tee_time_id.in_(teetimes)).all()
+
+    stmt = "select TeeTimes.time as Day, Players.first_name,Players.last_name, TeeTimes.time as Time from teetimeplayers "
+    stmt += " inner join players on teetimeplayers.player_id=players.id "
+    stmt += " inner join teetimes on teetimeplayers.tee_time_id=teetimes.id"
+    stmt += f" where teetimes.week_id={curr_week.id}"
     fields = {
-        'player_id': Field(None,None),
-        'tee_time.time': Field(time_to_day_time,'Time')
+        'Day': Field(time_to_day_date,'Day'),
+        'Players.first_name': Field(None,'First Name'),
+        'Players.last_name': Field(None,'Last Name'),
+        'tee_time.time': Field(time_to_hourminute,'Time')
     }
-    table_creator = TableCreator('TeeTimePlayers', fields)
+    table_creator = TableCreator('TeeTimePlayers', fields,actions=[])
     table_creator.set_items_per_page(15)
-    table_creator.create_view()
-    table = table_creator.create(1)
+    table_creator.domain = 'pairings/'
+    table_creator.from_query(stmt)
+    table = table_creator.create(page)
     return render_template("teetimes/pairings.html",table=table)

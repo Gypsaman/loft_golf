@@ -45,9 +45,9 @@ def add_users():
 
 def add_weeks():
     weeks = [
-        Weeks(start_date=dt.strptime('2024-08-26',"%Y-%m-%d"), end_date=dt.strptime('2024-09-01',"%Y-%m-%d"), closed=True),
-        Weeks(start_date=dt.strptime('2024-09-02',"%Y-%m-%d"), end_date=dt.strptime('2024-09-08',"%Y-%m-%d"), closed=True),
-        Weeks(start_date=dt.strptime('2024-09-09',"%Y-%m-%d"), end_date=dt.strptime('2024-09-15',"%Y-%m-%d"), closed=False)
+        Weeks(start_date=dt.strptime('2024-08-27',"%Y-%m-%d"), end_date=dt.strptime('2024-09-02',"%Y-%m-%d"), closed=True),
+        Weeks(start_date=dt.strptime('2024-09-03',"%Y-%m-%d"), end_date=dt.strptime('2024-09-09',"%Y-%m-%d"), closed=True),
+        Weeks(start_date=dt.strptime('2024-09-10',"%Y-%m-%d"), end_date=dt.strptime('2024-09-16',"%Y-%m-%d"), closed=False)
     ]
     for week in weeks:
         db.session.add(week)
@@ -71,9 +71,9 @@ def add_requests(week):
     db.session.commit()
 
 def add_tee_times(week):
-    times = [dt.strptime('2024-09-09 08:10 am',"%Y-%m-%d %I:%M %p"), 
-             dt.strptime('2024-09-09 08:20 am',"%Y-%m-%d %I:%M %p"), 
-             dt.strptime('2024-09-09 08:30 am',"%Y-%m-%d %I:%M %p"),
+    times = [dt.strptime('2024-09-16 08:10 am',"%Y-%m-%d %I:%M %p"), 
+             dt.strptime('2024-09-16 08:20 am',"%Y-%m-%d %I:%M %p"), 
+             dt.strptime('2024-09-16 08:30 am',"%Y-%m-%d %I:%M %p"),
              dt.strptime('2024-09-10 08:10 am',"%Y-%m-%d %I:%M %p"), 
              dt.strptime('2024-09-10 08:20 am',"%Y-%m-%d %I:%M %p"), 
              dt.strptime('2024-09-10 08:30 am',"%Y-%m-%d %I:%M %p"),

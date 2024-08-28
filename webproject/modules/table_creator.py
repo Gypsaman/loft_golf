@@ -31,7 +31,14 @@ def time_to_day_time(time):
     date = dt.strptime(time[:-7],"%Y-%m-%d %H:%M:%S")
     return date.strftime('%A %I:%M %p')
 
-    
+
+def time_to_day_date(time):
+    date = dt.strptime(time[:-7],"%Y-%m-%d %H:%M:%S")
+    return date.strftime('%A %b-%d')
+
+def time_to_hourminute(time):
+    date = dt.strptime(time[:-7],"%Y-%m-%d %H:%M:%S")
+    return date.strftime('%I:%M %p')
 def asset_type_string(asset_type):
     if asset_type == 1:
         return 'Token'
@@ -94,7 +101,10 @@ class TableCreator:
             stmt += f" order by {order}"
                     
         self.items = list(db.session.execute(text(stmt)))
-        
+
+    def from_query(self,query):
+        self.items = list(db.session.execute(text(query)))
+
     def view(self,view):
         self.items = view
           

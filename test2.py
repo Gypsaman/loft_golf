@@ -10,7 +10,6 @@ from webproject.modules.loftemail import Email
 
 
 
-
 def group_requests(players):
     import random
     player_groups = {
@@ -37,11 +36,29 @@ def group_requests(players):
 
     return groups
 
+
 with app.app_context():
 
     access_code = '69e1'
-    day_order = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
-
+    day_order = ['Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday','Monday']
+    category = 'weekend'
+    curr_week = Weeks.query.filter(Weeks.closed==False).order_by(Weeks.start_date).first()
+    days_used = day_order[:4] if category == 'weekday' else day_order[4:]
+    offset = 0 if category == 'weekday' else 4
+    for idx,day in enumerate(days_used):
+        start_date = curr_week.start_date + timedelta(days=idx+offset)
+        end_date = curr_week.start_date + timedelta(days=idx+1+offset)
+        tee_requests = [r.player_id for r in TeeRequests.query.filter(TeeRequests.week_id==curr_week.id,getattr(TeeRequests,day)==True).all()]
+        groups = group_requests(tee_requests)
+        tee_times = TeeTimes.query.filter(TeeTimes.week_id==curr_week.id,TeeTimes.time >= start_date, TeeTimes.time < end_date).all()
+        for idx,tee_time in enumerate(tee_times):
+            if idx >= len(groups):
+                break
+            group = groups[idx]
+            for player in group:
+                tee_time_player = TeeTimePlayers(player_id=player,tee_time_id=tee_time.id)
+                db.session.add(tee_time_player)
+        db.session.commit()
     # player = Players.query.filter_by(access_code=access_code).first()
     # curr_week = Weeks.query.filter(Weeks.closed==False).order_by(Weeks.start_date).first()
     # teetimes = TeeTimes.query.filter_by(week_id=curr_week.id).all()
@@ -67,20 +84,7 @@ with app.app_context():
     #     print(request)
 
 
-    curr_week = Weeks.query.filter(Weeks.closed==False).order_by(Weeks.start_date).first()
-    # for idx,day in enumerate(day_order):
-    #     start_date = curr_week.start_date + timedelta(days=idx)
-    #     end_date = curr_week.start_date + timedelta(days=idx+1)
-    #     print(start_date, end_date)
-    #     tee_requests = [r.player_id for r in TeeRequests.query.filter(TeeRequests.week_id==curr_week.id,getattr(TeeRequests,day)==True).all()]
-    #     groups = group_requests(tee_requests)
-    #     tee_times = TeeTimes.query.filter(TeeTimes.week_id==curr_week.id,TeeTimes.time >= start_date, TeeTimes.time < end_date).all()
-    #     for idx,tee_time in enumerate(tee_times):
-    #         group = groups[idx]
-    #         for player in group:
-    #             tee_time_player = TeeTimePlayers(player_id=player,tee_time_id=tee_time.id)
-    #             db.session.add(tee_time_player)
-    #     db.session.commit()
+
 
         # break
 
@@ -90,12 +94,14 @@ with app.app_context():
     #     print(group.player_id, group.tee_time.time)
         
 
-    stmt = "SELECT player_id,tee_time from TeeTimePlayers"
+    # stmt = "select Players.first_name,Players.last_name, TeeTimes.time from teetimeplayers "
+    # stmt += " inner join players on teetimeplayers.player_id=players.id "
+    # stmt += " inner join teetimes on teetimeplayers.tee_time_id=teetimes.id"
+    # stmt += f" where teetimes.week_id={curr_week.id}"
+    # tees = list(db.session.execute(text(stmt)))
 
-    teetimes = list(db.session.execute(text(stmt)))
-    for teetime in teetimes:
-        print(teetime) 
-
+    # for tee in tees:
+    #     print(tee)
 
 
 # from webproject.modules.loftemail import Email
