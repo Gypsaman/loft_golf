@@ -94,7 +94,7 @@ with app.app_context():
 
     teetimes = list(db.session.execute(text(stmt)))
     for teetime in teetimes:
-        print(teetime)
+        print(teetime) 
 
 
 
