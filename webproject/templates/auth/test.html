@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .navbar {
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--bs-navbar-padding-y) var(--bs-navbar-padding-x);
+      }
+      .navbar-collapse {
+  flex-basis: 1;
+  flex-grow: 1;
+  align-items: center;
+}
+    </style>
+<link href="/static/css/bootstrap.css" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar ">
+      <div class="container" style="border-style:solid;border-color:red">
+          <a href="/" class="navbar-brand">
+              <img src="/static/imgs/DNA_Icon-primary.png" style="height:30px; object-fit:contain;">
+          </a>
+  
+          <button 
+              class="navbar-toggler" 
+              type="button" 
+              data-bs-toggle="collapse" 
+              data-bs-target="#navmenu"
+          >
+              <span class="navbar-toggle-icon"></span>
+          </button>
+      </div>
+      <div class="collapse navbar-collapse" id="navmenu"style="border-style:solid;border-color:red">
+          <ul class="navbar-nav ms-auto">
+
+              <li class="nav-item">
+                  <a href="/profile" class="nav-link">Profile</a>
+              </li>
+              <li class="nav-item">
+                  <a href="/wallet" class="nav-link">Wallet</a>
+              </li>
+              <!-- <li class="nav-item">
+                  <a href="/tokens" class="nav-link">Tokens</a>
+              </li>
+              <li class="nav-item">
+                  <a href="/NFTs" class="nav-link">NFTs</a>
+              </li>
+              <li class="nav-item">
+                  <a href="/Transactions" class="nav-link">Transactions</a>
+              </li> -->
+              <li class="nav-item">
+                  <a href="/assets" class="nav-link">Assets</a>
+              </li>
+  
+              <li class="nav-item">
+                  <a href="/assignments" class="nav-link">Assignments</a>
+              </li>
+  
+              <li class="nav-item">
+                  <a href="/logout" class="nav-link">Log out</a>
+              </li>
+              <li class="nav-item">
+                  <a href="/login" class="nav-link">Log in</a>
+              </li>
+  
+          </ul>
+      </div>
+  </nav>
+  </body>
+</html>

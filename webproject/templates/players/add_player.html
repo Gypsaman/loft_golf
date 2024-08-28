@@ -1,0 +1,64 @@
+{% extends 'base.html' %} 
+{% block body %}
+<div class="neuro-content">
+    <h1>Add Player</h1>
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <div class="notification is-danger">
+        {{ messages[0] }}. Go to
+        <a href="{{ url_for('main.weather') }}">Weather Page</a>
+    </div>
+    {% endif %} {% endwith %}
+    <div class="neuro-form-section">
+        <form class="neuro-form"  method="POST" action="/players/add">
+            <div class="neuro-form-entry-row">
+                <label for="first_name">First Name</label>
+                <input name="first_name" id="first_name" >
+            </div>
+
+            <div class="neuro-form-entry-row">
+                <label for= "last_name">Last Name</label>
+                <input name = "last_name" id = "last_name" >
+            </div>
+            <div class="neuro-form-entry-row">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email"  >
+            </div>
+            <div class="neuro-form-entry-row">
+                <label for="weekday">Weekday</label>
+                <input type="checkbox" name="weekday" id="weekday"  >
+            </div>
+            <div class="neuro-form-entry-row">
+                <label for="weekend">Weekend</label>
+                <input type="checkbox" name="weekend" id="weekend"   >
+            </div>
+            <div class="neuro-form-entry-row">
+                <label for="phone">Phone</label>
+                <input name="phone" id="phone"  >
+            </div>
+            <div class="neuro-form-entry-row">
+                <label for="ghin">GHIN</label>
+                <input name="ghin" id="ghin" >
+            </div>
+            <div class="neuro-form-entry-row">
+                <label for="handicap">Handicap</label>
+                <input name="handicap" id="handicap"  >
+            </div>
+            <div class="neuro-form-entry-row">
+                <label for="active">Active</label>
+                <input type="checkbox" name="active" id="active" >
+            </div>
+
+            <div class="neuro-form-entry-row">
+                <div class="" style="margin-top: 40px;">
+                    <button type="submit" class="neuro-button-main">Update</button>
+                </div>
+                <div class="" style="margin-top: 40px;margin-left: 5px">
+                    <button type="button" class="neuro-button-main" onclick="window.location.href='/players/1'">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>>
+    
+{% endblock %}

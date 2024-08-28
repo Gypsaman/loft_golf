@@ -1,0 +1,48 @@
+{% extends 'base.html' %} 
+{% block body %}
+<div class="neuro-content">
+
+    <div>
+        <h1>Add Tee Time</h1>
+        {% with messages = get_flashed_messages() %} {% if messages %}
+        <div class="notification is-danger">
+            {{ messages[0] }}. Go to
+            <a href="{{ url_for('main.weather') }}">Weather Page</a>
+        </div>
+        {% endif %} {% endwith %}
+        <div class="neuro-form-section">
+            <form class="neuro-form"  method="POST" action="/teetimes/add">
+                <div class="neuro-form-entry-row">
+                    <label for="teetime">Tee Time</label>
+                    <input type="datetime-local" min="{{week.start_date}}" max="{{week.end_date}}" name="teetime" id="teetime" >
+                </div>
+                <div class="neuro-form-entry-row">
+                    <label for="holiday">Holiday</label>
+                    <input type="checkbox" name="holiday" id="holiday" />
+                </div>
+                <div class="neuro-form-entry-row">
+                    <label for="closed">Closed</label>
+                    <input type="checkbox" name ="closed" id="closed" >
+                </div>
+                <div>
+                    <input type="hidden" name="week_id" value=" {{week.id}}">
+                </div>
+
+
+                <div class="neuro-form-entry-row">
+                    <div class="" style="margin-top: 40px;">
+                        <button type="submit" class="neuro-button-main">Update</button>
+                    </div>
+                    <div class="" style="margin-top: 40px;">
+                        <button type="button" class="neuro-button-main" onclick="window.location.href='/weeks/update/{{week.week_id}}'">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        </div>
+
+
+
+</div>
+    
+{% endblock %}

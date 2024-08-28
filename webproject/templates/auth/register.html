@@ -1,0 +1,57 @@
+{% extends 'base.html' %} {% block body %}
+
+<!-- Section: Design Block -->
+<div class="neuro-content">
+  <h1>Register</h1>
+  {% with messages = get_flashed_messages() %} {% if messages %}
+  <div class="notification is-danger">
+    {{ messages[0] }}. Go to
+    <a href="{{ url_for('auth.login') }}">login page</a>
+  </div>
+  {% endif %} {% endwith %}
+  <form class="neuro-login-form" method="POST" action="/register">
+ 
+        <div><br></div>
+
+        <div class="">
+          <input type="text" id="formFirstName" name="firstname"  placeholder="First Name"/>
+        </div>
+
+
+        <div class="">
+          <input type="text" id="FormLastName" name="lastname"  placeholder="Last Name"/>
+        </div>
+      
+
+
+      <div class="">
+          <input  type="text" id="FormStudentID" name="studentid" placeholder="Student ID"/>
+      </div>
+
+      <div>
+        <label for= "sectionid">Section</label>
+        <select name="sectionid" id="sectionid">
+          {% for section in sections %}
+          <option value="{{ section.id }}">{{ section.section }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="">
+        <input type="email" id="FormEmail" name="email" placeholder="Email Address"/>
+      </div>
+
+      <div class="">
+        <input type="password" id="FormPassword" name="password" placeholder="Password"/>
+      </div>
+
+      <div class="">
+        <button type="submit" class="neuro-button-main">
+          Sign up
+        </button>
+      </div>
+
+  </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,412 @@
+@font-face {
+  font-family: rubik;
+  src: url('https://fonts.google.com/specimen/Rubik') format('truetype');
+}
+* {
+  font-family: rubik;
+
+}
+body {
+  
+  background-image: url('/static/imgs/DNA_Icon-white.png');
+  background-size: cover;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  color: black;
+  background-color: #F5F5F5;
+  font-family: rubik;
+
+
+}
+
+input[type="file"]::file-selector-button{
+  color: white;
+  opacity: 1;
+  font-size: 15px;
+  background-color: #3665ab;
+  border-radius: 10px;
+  border-style:none;  
+  padding: 10px;
+  margin-right: 10px;
+}
+.neuro-button-main {
+  color: white;
+  opacity: 1;
+  font-size: 25px;
+  background-color: #2560b9;
+  border-radius: 10px;
+  border-style:none;
+  min-height: 25px;
+  min-width: 100px;
+  margin-bottom: 10px;
+  padding: 15px 25px;
+}
+.neuro-button-nav {
+  color: white;
+  opacity: 1;
+  font-size: 15px;
+  background-color: #30ba14;
+  border-radius: 10px;
+  border-style:none;
+  min-height: 15px;
+  min-width: 50px;
+  margin-bottom: 10px;
+  padding: 15px 25px;
+}
+button[disabled=disabled], button:disabled
+ {
+  background-color: gray;
+  color: #ffffff;
+}
+.neuro-button-small {
+  color: white;
+  opacity: 1;
+  font-size: 10px;
+  background-color: #2560b9;
+  border-radius: 10px;
+  border-style:none;
+  min-height: 15px;
+  min-width: 50px;
+  margin-bottom: 10px;
+  padding: 2px 5px;
+} 
+.notification 
+.is-danger{
+  color: red;
+}
+.neuro-flex-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 98vh;
+  
+}
+.neuro-logo {
+  width: 200px; 
+  padding-bottom: 10px;
+}
+
+.neuro-flex-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  
+}
+.neuro-flex-row {
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+  gap: 5px;
+  padding-top: 10px;
+}
+.neuro-flex-right {
+  align-items: right;
+}
+
+.neuro-navbar {
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  padding-left: 100px;
+  padding-right: 100px;
+  background-color: #00002F;
+}
+
+.neuro-nav-item {
+  
+  color: white;
+  padding-right: 5px;
+  padding-top: 20px;
+  list-style-type: none;
+}
+
+.neuro-nav-item  > a:hover {
+  color: rgb(25, 191, 55);
+}
+.neuro-nav-link {
+  color: white;
+  text-decoration: none;
+}
+
+select {
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px 10px;
+  margin-bottom: 15px;
+}
+
+.neuro-debug-border {
+  border-style: solid;
+  border-color: red;
+}
+.neuro-edit,
+.neuro-delete {
+
+  filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%);
+}
+ 
+
+.neuro-menu {
+  height: 50px;
+}
+.neuro-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  padding-top: 5px;
+
+}
+.neuro-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 5px;
+
+}
+.neuro-content h1 {
+  color: #AE6222;
+  font-size: 47px;
+}
+
+.neuro-view-nft-collection {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  margin-top: 20px;
+}
+.neuro-view-nft {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  margin: 5px;
+  border-style: solid;
+  border-color: gray;
+  border-radius: 20px;
+  border-width: 1px;
+  /* background-color: rgb(39, 37, 37); */
+  
+}
+.neuro-nft-metadata {
+  display: flex;
+  
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 2px;
+  flex-wrap: wrap;
+}
+.neuro-view-asset-nft,
+.neuro-view-asset-token,
+.neuro-view-asset-dapp {
+  display: flex;
+  flex-direction:column;
+  overflow: auto;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  margin: 5px;
+  border-style: solid;
+  border-color: gray;
+  border-radius: 40px;
+  border-width: 1px;
+  min-width: 400px;
+}
+.neuro-view-asset-token {
+  /* background-color: rgb(67, 77, 86); */
+}
+.neuro-view-asset-nft {
+  /* background-color: rgb(29, 43, 58); */
+}
+.neuro-view-asset-dapp {
+  /* background-color: rgb(38, 60, 57);; */
+}
+
+.neuro-nft-attribute-label {
+  /* background-color: rgb(65, 65, 170); */
+  color: black;
+  padding: 2px;
+}
+
+.neuro-nft-attribute-value {
+  /* background-color: rgb(86, 92, 181); */
+  color: black;
+  padding: 2px;
+  margin-right: 5px;
+}
+
+input,textarea {
+  background-color: rgb(248, 243, 243);
+  
+}
+
+
+.neuro-form-section {
+  border-style: solid;
+  border-color: gray;
+  border-radius: 20px;
+  border-width: 1px;
+  /* background-color: rgb(39, 37, 37); */
+  padding: 15px;
+  margin: 10px;
+  overflow: auto;
+
+}
+.neuro-form-section h3 {
+  color: rgb(25, 25, 219);
+}
+.neuro-form-entry-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 20 px ;
+  padding: 2px;
+}
+.neuro-form-entry-row > label {
+  margin-right: 10px;
+}
+.neuro-tran-view {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: left;
+  padding: 5px;
+  margin: 5px;
+
+  /* background-color: rgb(39, 37, 37); */
+  
+}
+.neuro-tran-view > input,textarea {
+  min-width: 600px;
+}
+
+.neuro-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 45px;
+  color: white;
+  background-color: #00002F;
+  padding: 10px 30px ;  /* top/bottom left/right */
+  font-size: 8pt;
+  font-family: rubik;
+}
+
+
+
+
+.neuro-dashboard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: left;
+  background-color: white;
+  height: 100%;
+  width: 100%;
+}
+.neuro-dashboard-profile{
+  display: flex;
+  flex: 4;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 5px;
+  margin: 5px;
+  border-style: transparent;
+  border-radius: 20px;
+  border-width: 1px;
+  background-color: #95b5d5;
+  opacity: 0.5;
+  width: 100%;
+}
+.neuro-dashboard-profile h1{
+  color: #2560B9
+}
+.neuro-dashboard-profile-item{
+  display: flex;
+  flex-direction: row;
+  
+  margin: 5px;
+  border-bottom: black;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+}
+.nuero-dashboard-profile-item-label{
+  flex: 1;
+  color: #091c38;
+  font-size: 9px;
+  text-align: right;
+}
+.neuro-dashboard-profile-item-value{
+  flex: 6;
+  color: #010a17;
+  text-align: left;
+  align-content: flex-start;
+  
+
+}
+.neuro-dashboard-content{
+  display: flex;
+  flex: 4;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-start;
+  padding: 5px;
+  margin: 5px;
+
+  background-color: white;
+  min-height: 400px;
+}
+.neuro-dashboard-content-section1 {
+  display: flex;
+  flex: 2;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 90%;
+  overflow: auto;
+  flex-grow: none;
+  
+  margin-left: 20px;
+}
+.neuro-dashboard-content-section1 h3 {
+  color: #AE6222;
+  font-size: 47px;
+}
+.neuro-dashboard-content-section2 {
+  display: flex;
+  height: 100%;
+  overflow: auto;
+  align-items: center;
+
+  flex: 3;
+  flex-direction: column;
+  flex-grow: none;
+  
+  margin-left: 20px;
+}
+
+.neuro-dashboard-content-section1 label {
+  color: #2560B9;
+  font-size: 24px;
+}
+.neuro-dashboard-content-section1 input {
+  color: #2560B9;
+  font-size: 12pt;
+  max-width: 32em;
+  margin-bottom: 15px;
+}
+.neuro-dashboard-content-section h1 {
+  color: #AE6222;
+  font-size: 47px;
+}

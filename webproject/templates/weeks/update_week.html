@@ -1,0 +1,55 @@
+{% extends 'base.html' %} 
+{% block body %}
+<div class="neuro-content">
+    <div class="neuro-flex-row">
+        <div>
+            <h1>Update Week</h1>
+            {% with messages = get_flashed_messages() %} {% if messages %}
+            <div class="notification is-danger">
+                {{ messages[0] }}. Go to
+                <a href="{{ url_for('main.weather') }}">Weather Page</a>
+            </div>
+            {% endif %} {% endwith %}
+            <div class="neuro-form-section">
+                <form class="neuro-form"  method="POST" action="/weeks/update/{{week.id}}">
+                    <div class="neuro-form-entry-row">
+                        <label for="start_date">Start Date</label>
+                        <input type="datetime" name ="start_date" id="stat_date" value={{week.start_date}}>
+                    </div>
+
+                    <div class="neuro-form-entry-row">
+                        <label for= "end_date">Last Name</label>
+                        <input type="datetime" name = "end_date" id = "end_date" value={{week.end_date}} >
+                    </div>
+                    <div class="neuro-form-entry-row">
+                        <label for="closed">Closed</label>
+                        <input type="checkbox" name="closed" id="closed" {{"checked" if week.closed}} >
+                    </div>
+                    <div class="neuro-form-entry-row">
+                        <div class="" style="margin-top: 40px;">
+                            <button type="submit" class="neuro-button-main">Update</button>
+                        </div>
+                        <div class="" style="margin-top: 40px;">
+                            <button type="button" class="neuro-button-main" onclick="window.location.href='/weeks'">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+         </div>
+
+        <div>
+            <h1>Tee Times</h1>
+            {{ tee_times | safe }}
+            <div class="neuro-flex-row" style="margin-top: 10px;">
+                <div>
+                    <button class="neuro-button-main" onclick="window.location.href='/teetimes/add/{{week.id}}'">
+                        Add
+                    </button>
+                </div>  
+            </div>
+        </div>
+    </div>
+
+</div>
+    
+{% endblock %}

@@ -1,0 +1,36 @@
+<nav class="neuro-navbar" >
+  <div class="neuro-flex-row ">
+    <a href="/dashboard" >
+      <img class="neuro-logo" src="/static/imgs/DNA_Secondary-white.png" />
+    </a>
+  </div>
+  <div class="neuro-flex-row  neuro-flex-right ms-auto">
+
+      <ul class="neuro-flex-row ">
+      {% if current_user.is_authenticated %}
+
+        <li class="neuro-nav-item">
+          <a href="/players/1" class="neuro-nav-link">Players</a>
+        </li>
+        <li class="neuro-nav-item">
+          <a href="/weeks" class="neuro-nav-link">Tee Times</a>
+        </li>
+        <li class="neuro-nav-item">
+          <a href="/requests" class="neuro-nav-link">Requests</a>
+        </li>
+        <li class="neuro-nav-item">
+          <a href="/pairings" class="neuro-nav-link">Pairings</a>
+        </li>
+        <li class="neuro-nav-item">
+          <a href="/logout" class="neuro-nav-link">Log out</a>
+        </li>
+
+      
+      {% else %}
+        <li class="neuro-nav-item">
+          <a href="/login" class="neuro-nav-link">Log in</a>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>

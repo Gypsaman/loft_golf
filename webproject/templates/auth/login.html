@@ -1,0 +1,44 @@
+{% extends 'base.html' %} {% block body %} 
+
+
+<div class="neuro-content">
+
+  <form class="neuro-login-form" action="/login" method="POST">
+    <h1>Log In</h1>
+
+    {% with messages = get_flashed_messages() %} 
+        {% if messages %}
+        <div style="color:red">{{ messages[0] }}</div>
+
+        {% endif %} 
+    {% endwith %}
+    
+    <input type="email" id="form2Example1" name="email" class="form-control" placeholder="Email Address"/>
+  
+    <input type="password" id="form2Example2" name="password" class="form-control" placeholder="Password" />
+
+    <!-- Remember me and forgot password -->
+    <div class="neuro-flex-row">
+        <!-- <div class="neuro-login-check">
+          <input  name="remember" type="checkbox" value="" id="remember" checked/>
+          <label for="remember">Remember me</label>
+        </div> -->
+      
+        <div class="">
+          <a href="/passwordreset">Forgot password?</a>
+        </div>
+    </div>
+
+    <div class="">
+      <button type="submit" class="neuro-button-main">Sign in</button>
+    </div>
+
+    
+    <div class="text-center">
+      <p>Not a member? <a href="\register">Register</a></p>
+    </div>
+
+  </form>
+
+</div>
+{% endblock %}

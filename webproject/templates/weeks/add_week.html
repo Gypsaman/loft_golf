@@ -1,0 +1,39 @@
+{% extends 'base.html' %} 
+{% block body %}
+<div class="neuro-content">
+    <h1>Add Week</h1>
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <div class="notification is-danger">
+        {{ messages[0] }}. Go to
+        <a href="{{ url_for('main.weather') }}">Weather Page</a>
+    </div>
+    {% endif %} {% endwith %}
+    <div class="neuro-form-section">
+        <form class="neuro-form"  method="POST" action="/weeks/add">
+            <div class="neuro-form-entry-row">
+                <label for="start_date">Start Date</label>
+                <input type="date" name ="start_date" id="stat_date" >
+            </div>
+
+            <div class="neuro-form-entry-row">
+                <label for= "end_date">End Date</label>
+                <input type="date" name = "end_date" id = "end_date" >
+            </div>
+            <div class="neuro-form-entry-row">
+                <label for="closed">Closed</label>
+                <input type="checkbox" name="closed" id="closed"  >
+            </div>
+            <div class="neuro-form-entry-row">
+                <div class="" style="margin-top: 40px;">
+                    <button type="submit" class="neuro-button-main">Add</button>
+                </div>
+                <div class="" style="margin-top: 40px;margin-left: 5px">
+                    <button type="button" class="neuro-button-main" onclick="window.location.href='/weeks'">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>>
+    
+{% endblock %}

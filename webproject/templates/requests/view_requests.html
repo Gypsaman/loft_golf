@@ -1,0 +1,14 @@
+{% extends 'base.html' %} {% block body %}
+<div class="neuro-content">
+  <h1>Requests Pending</h1>
+  <h2>Week of {{curr_week.start_date.strftime('%b-%d')}}</h2>
+    {{ table | safe }}
+    <div class="neuro-flex-row" style="margin-top: 10px;">
+        <div>
+            <button class="neuro-button-main" onclick="window.location.href='/requests/generate'">
+                Generate Tee Times
+            </button>
+        </div>  
+    </div>
+</div>
+{% endblock %}
