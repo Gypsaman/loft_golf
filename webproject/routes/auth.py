@@ -8,7 +8,7 @@ from datetime import datetime as dt
 from datetime import timedelta
 import random
 from webproject.modules.loftemail import Email
-from webproject.modules.logger import LogType, Log
+# from webproject.modules.logger import LogType, Log
 
 
 
@@ -30,11 +30,11 @@ def login_post():
     curr_usr = User.query.filter_by(email=email).first()
 
     if not curr_usr or not check_password_hash(curr_usr.password,password):
-        Log(LogType.LOGIN, email, "failed login attempt")
+        # Log(LogType.LOGIN, email, "failed login attempt")
         flash('Incorrect email/password combination')
         return redirect(url_for('auth.login'))
     login_user(curr_usr,remember=remember)
-    Log(LogType.LOGIN, curr_usr.email, "successful login")
+    # Log(LogType.LOGIN, curr_usr.email, "successful login")
     return redirect(url_for('main.weather'))
 
 
