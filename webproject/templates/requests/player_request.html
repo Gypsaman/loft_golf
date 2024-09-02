@@ -13,14 +13,8 @@
     {% endif %} {% endwith %}
     <div class="neuro-form-section">
         <form class="neuro-form"  method="POST" action="/requests/update/{{request.id}}">
-            {% if 'Monday' in days %}
-            <div class="neuro-form-entry-row">
-                <input type="checkbox" name="monday" id="monday" {{"checked" if request.Monday}}>
-                <label for="monday">Monday</label>
-            </div>
-            {% else %}
-                <input type="hidden" name="monday" id="monday" {{"checked" if request.Monday}}>
-            {% endif %}
+
+
             {% if 'Tuesday' in days %}
             <div class="neuro-form-entry-row">
                 <input type="checkbox" name="tuesday" id="tuesday" {{"checked" if request.Tuesday}} >
@@ -68,6 +62,14 @@
                 </div>
             {% else %}
                 <input type="hidden" name="sunday" id="sunday" >
+            {% endif %}
+            {% if 'Monday' in days %}
+            <div class="neuro-form-entry-row">
+                <input type="checkbox" name="monday" id="monday" {{"checked" if request.Monday}}>
+                <label for="monday">Monday</label>
+            </div>
+            {% else %}
+                <input type="hidden" name="monday" id="monday" {{"checked" if request.Monday}}>
             {% endif %}
             
             <div class="neuro-form-entry-row">

@@ -100,7 +100,7 @@ with app.app_context():
     db.create_all()
     add_players()
     add_users()
-    add_weeks() 
+    # add_weeks() 
 
     # for requests in TeeRequests.query.all():
     #     if not (requests.Monday or requests.Tuesday or requests.Wednesday or requests.Saturday):

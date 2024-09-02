@@ -8,6 +8,7 @@ import time
 import os
 from typing import List,Dict
 import imaplib
+from dotenv import load_dotenv
 
 
 servers = {
@@ -15,16 +16,17 @@ servers = {
     "DNA": { "emailServer": "smtp.ionos.com", "emailPort": 587, "emailAccount": "cesar@distributedneuralapplications.com","password_source":"NeuroEmail"},
     "LOFT": {"emailServer": "smtp.privateemail.com", "emailPort": 587, "emailAccount":"loft@neurodna.xyz","password_source":"LOFTPassword"}
 }
+load_dotenv()
 
 class Email:
     
     def __init__(self) -> None:
-        server = os.environ.get('EMAIL_SERVER')
+        server = os.environ.get('EMAIL_SERVER').strip()
         
         self.emailServer = servers[server]['emailServer'] #smtp.office365.com
         self.emailPort = servers[server]['emailPort'] #587
 
-        self.password = os.environ.get(servers[server]['password_source'])
+        self.password = os.environ.get(servers[server]['password_source']).strip()
         self.emailAccount = servers[server]['emailAccount']
 
         self.context = ssl.create_default_context()

@@ -44,6 +44,10 @@
                 <input name="handicap" id="handicap" value="{{ player.handicap }}" >
             </div>
             <div class="neuro-form-entry-row">
+                <label for="accesscode">Access Code</label>
+                <input name="accesscode" id="accesscode" value="{{ player.access_code }}" readonly>
+            </div>
+            <div class="neuro-form-entry-row">
                 <label for="active">Active</label>
                 <input type="checkbox" name="active" id="active" {{"checked" if player.active }} >
             </div>

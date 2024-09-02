@@ -8,6 +8,7 @@ from collections import Counter
 from sqlalchemy import func
 from webproject.modules.table_creator import Field, TableCreator, true_false, time_to_day_time
 from webproject.modules import messaging
+from sqlalchemy import text
 
 
 requests = Blueprint('requests', __name__)
@@ -89,10 +90,25 @@ def generate_requests(category):
                 break
             group = groups[idx]
             for player in group:
+                if is_player_booked(player,tee_time):
+                    continue
                 tee_time_player = TeeTimePlayers(player_id=player,tee_time_id=tee_time.id)
                 db.session.add(tee_time_player)
         db.session.commit()
+        messaging.tee_time_assigned(curr_week,category)
     return redirect(url_for('teetimes.pairings',page=1))
+
+def is_player_booked(player,tee_time):
+    start_date = tee_time.time.replace(hour=0,minute=0,second=0)
+    end_date = tee_time.time.replace(hour=23,minute=59,second=59)
+    sql = "Select TeeTimePlayers.id from teetimeplayers"
+    sql += " join teetimes on teetimeplayers.tee_time_id = teetimes.id "
+    sql += f" where teetimeplayers.player_id = {player} and teetimes.time > '{start_date}' and teetimes.time < '{end_date}'"
+
+    results = list(db.session.execute(text(sql)))
+
+    return len(results) > 0
+    
 
 
 @requests.route('/requests')
