@@ -79,9 +79,10 @@ def thank_you():
 def generate_requests(category):
     curr_week = Weeks.query.filter(Weeks.closed==False).order_by(Weeks.start_date).first()
     days_used = day_order[:4] if category == 'weekday' else day_order[4:]
+    offset = 0 if category == 'weekday' else 4
     for idx,day in enumerate(days_used):
-        start_date = curr_week.start_date + timedelta(days=idx)
-        end_date = curr_week.start_date + timedelta(days=idx+1)
+        start_date = curr_week.start_date + timedelta(days=idx+offset)
+        end_date = curr_week.start_date + timedelta(days=idx+offset+1)
         tee_requests = [r.player_id for r in TeeRequests.query.filter(TeeRequests.week_id==curr_week.id,getattr(TeeRequests,day)==True).all()]
         if len(tee_requests) == 0:
             continue

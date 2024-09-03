@@ -21,8 +21,8 @@ def submission_received(submission):
     email.send_email('gypsaman@gmail.com','Tee Time Request Received',body)
 
 def tee_time_assigned(curr_week,category):
-    start = 0 if category == 'weekday' else 5
-    end = 3 if category == 'weekday' else 7
+    start = 0 if category == 'weekday' else 4
+    end = 3 if category == 'weekday' else 6
     start_date = curr_week.start_date  + timedelta(days=start)
     end_date = curr_week.start_date + timedelta(days=end)
 
@@ -34,24 +34,16 @@ def tee_time_assigned(curr_week,category):
     sql += " order by teetimes.time"
 
     teetimes = list(db.session.execute(text(sql)))
-    tee_time_table(teetimes)
+    teetable =  tee_time_table(teetimes)
 
     body = f"Here are the tee times you requested, along with the other pairings "
-    body += f"for {start_date.strftime('%b-%d')} to {(end_date - timedelta(days=1)).strftime('%b-%d')}:"
+    body += f"for {start_date.strftime('%b-%d')} to {(end_date - timedelta(days=1)).strftime('%b-%d')}:\n\n"
 
-    curr_tee = None
-    for teetime in teetimes:
-        if curr_tee is None or curr_tee != teetime.time:
-           body += "\n\n"+ dt.strptime(teetime.time[:-7],"%Y-%m-%d %H:%M:%S").strftime('%A %H:%M') + "\n"
-           body += "===============\n"
-           curr_tee = teetime.time
-        
-        body += f"{teetime.first_name} {teetime.last_name} \n"
 
     email = Email()
     for teetime in teetimes:
         email_body = f'{teetime.first_name},\n\n' + body
-        email.send_email('gypsaman@gmail.com','Tee Time Assignment',email_body)
+        email.send_multipart_email('gypsaman@gmail.com','Tee Time Assignment',email_body,teetable)
         break
 
 
@@ -69,7 +61,7 @@ def tee_time_table(teetimes):
     html = '<table>'+'\n'
     html += '<tbody>'+'\n'
     html += '<tr style="height:.25in">'+'\n'
-    html += '<td style="width:1in;background-color:#4472c4;; color:yellow;text-align: center;">Date/Time</td>'+'\n'
+    html += '<td style="width:1in;background-color:#4472c4;; color:yellow;text-align: center;">Date</td>'+'\n'
     html += '<td style="width:3in;background-color:#4472c4;; color:yellow;text-align: center;">Golfer</td>'+'\n'
     html += '<td style="width:1in;background-color:#4472c4;; color:yellow;text-align: center;">Tee Time</td>'+'\n'
     html += '</tr>'+'\n'
@@ -95,12 +87,16 @@ def tee_time_table(teetimes):
         html += f'<td style="width:1in">{dt.strptime(teetime.time[:-7],"%Y-%m-%d %H:%M:%S").strftime("%H:%M")}</td> \n'
         html += '</tr>'+'\n'
         row = row + 1
+               
+    for i in range(row,5):
+        html += '<tr><td></td><td></td></tr>'+'\n'
+        
 
+    html += '<tr><td style="background-color:blue"></td><td style="background-color:blue"></td><td style="background-color:blue"></td></tr>'+'\n'
     html += '</tbody>'+'\n'
 
     html += '</table>'+'\n'
 
-    with open('teetimes.html','w') as f:
-        f.write(html)
+    return html
 
 

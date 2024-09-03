@@ -2,6 +2,8 @@ import ssl
 import email
 from email.message import EmailMessage
 from email.header import decode_header
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 import smtplib
 import json
 import time
@@ -55,6 +57,19 @@ class Email:
             self.mailserver.sendmail(self.emailAccount,recipients,em.as_string())
             
             
+    def send_multipart_email(self,recipient,subject,body,html,carboncopy=None) -> None:
+        msg = MIMEMultipart()
+        msg['From'] = self.emailAccount
+        msg['To'] = recipient
+        if carboncopy is not None:
+            msg['Cc'] = carboncopy
+        msg['Subject'] = subject
+
+        msg.attach(MIMEText(body, 'plain'))
+        msg.attach(MIMEText(html, 'html'))
+
+        self.mailserver.send_message(msg)
+        
     def bulk_email(self,emails: List[Dict[str,str]])-> None:
         
         for idx,email in enumerate(emails): 
