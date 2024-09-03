@@ -14,9 +14,9 @@ def submission_received(submission):
     body = f"Dear {player.first_name},\n\n"
     body += "Your tee time request has been received. You requested the following days "
     body += f"for the week of {curr_week.start_date.strftime('%B %d')} through {curr_week.end_date.strftime('%B %d')}:\n\n"
-    for day in day_order:
+    for idx,day in enumerate(day_order):
         if getattr(submission,day):
-            body += f"{day}\n"
+            body += f"{day}, {(curr_week.start_date + timedelta(days=idx)).strftime('%B %d')}\n"
     body += "\n\nYou will receive an email when your tee times are assigned.\n\n"
     email.send_email('gypsaman@gmail.com','Tee Time Request Received',body)
 
@@ -34,6 +34,7 @@ def tee_time_assigned(curr_week,category):
     sql += " order by teetimes.time"
 
     teetimes = list(db.session.execute(text(sql)))
+    tee_time_table(teetimes)
 
     body = f"Here are the tee times you requested, along with the other pairings "
     body += f"for {start_date.strftime('%b-%d')} to {(end_date - timedelta(days=1)).strftime('%b-%d')}:"
@@ -62,3 +63,44 @@ def tee_time_added(tee_time,is_old,is_dup,requester):
     elif is_dup:
         body = f"A request to add {tee_time.time.strftime('%A %b-%d %H:%M')} has been received.\n\n This is a duplicate entry, No action taken."
     email.send_email(requester,'Tee Time Added',body)
+
+
+def tee_time_table(teetimes):
+    html = '<table>'+'\n'
+    html += '<tbody>'+'\n'
+    html += '<tr style="height:.25in">'+'\n'
+    html += '<td style="width:1in;background-color:#4472c4;; color:yellow;text-align: center;">Date/Time</td>'+'\n'
+    html += '<td style="width:3in;background-color:#4472c4;; color:yellow;text-align: center;">Golfer</td>'+'\n'
+    html += '<td style="width:1in;background-color:#4472c4;; color:yellow;text-align: center;">Tee Time</td>'+'\n'
+    html += '</tr>'+'\n'
+    
+    curr_tee = None
+    row = 0
+    for teetime in teetimes:
+        html += '<tr>'+'\n'
+        if curr_tee is None or curr_tee != teetime.time:
+           row = 5 if not curr_tee else row+1
+           for i in range(row,5):
+               html += '<tr><td></td><td></td></tr>'+'\n'
+           row = 0
+           
+           if curr_tee:
+                html += '<tr><td style="background-color:blue"></td><td style="background-color:blue"></td><td style="background-color:blue"></td></tr>'+'\n'
+
+           html += '<td rowspan="4">'+ dt.strptime(teetime.time[:-7],"%Y-%m-%d %H:%M:%S").strftime('%A %B %d') + '</td>'+'\n'
+           curr_tee = teetime.time
+           
+        
+        html += f'<td style="width:3in">{teetime.first_name} {teetime.last_name}</td> \n'
+        html += f'<td style="width:1in">{dt.strptime(teetime.time[:-7],"%Y-%m-%d %H:%M:%S").strftime("%H:%M")}</td> \n'
+        html += '</tr>'+'\n'
+        row = row + 1
+
+    html += '</tbody>'+'\n'
+
+    html += '</table>'+'\n'
+
+    with open('teetimes.html','w') as f:
+        f.write(html)
+
+

@@ -42,6 +42,13 @@ def add_users():
     )
     db.session.add(user)
     db.session.commit()
+    user = User(
+        email='gj_seaman@yahoo.com',
+        password=generate_password_hash('Ducks',method='pbkdf2:sha256'),
+        role='admin'
+    )
+    db.session.add(user)
+    db.session.commit()
 
 def add_weeks():
     weeks = [
@@ -97,9 +104,11 @@ def add_tee_times(week):
 
 with app.app_context():
 
-    db.create_all()
-    add_players()
-    add_users()
+    curr_week = Weeks.query.filter(Weeks.closed==False).order_by(Weeks.start_date).first()
+    add_requests(curr_week)
+    # db.create_all()
+    # add_players()
+    # add_users()
     # add_weeks() 
 
     # for requests in TeeRequests.query.all():

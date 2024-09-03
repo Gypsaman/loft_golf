@@ -15,7 +15,7 @@
         <form class="neuro-form"  method="POST" action="/requests/update/{{request.id}}">
 
 
-            {% if 'Tuesday' in days %}
+            {% if 'Tuesday' in days and days['Tuesday'] > 0 %}
             <div class="neuro-form-entry-row">
                 <input type="checkbox" name="tuesday" id="tuesday" {{"checked" if request.Tuesday}} >
                 <label for="tuesday">Tuesday</label>
@@ -23,7 +23,7 @@
             {% else %}
             <input type="hidden" name="tuesday" id="tuesday" >
             {% endif %}
-            {% if 'Wednesday' in days %}
+            {% if 'Wednesday' in days and days['Wednesday'] > 0 %}
             <div class="neuro-form-entry-row">
                 <input type="checkbox" name="wednesday" id="wednesday" {{"checked" if request.Wednesday}}>
                 <label for="wednesday">Wednesday</label>
@@ -31,7 +31,7 @@
             {% else %}
             <input type="hidden" name="wednesday" id="wednesday" >
             {% endif %}
-            {% if 'Thursday' in days %}
+            {% if 'Thursday' in days and days['Thursday'] > 0%}
             <div class="neuro-form-entry-row">
                 <input type="checkbox" name="thursday" id="thursday" {{"checked" if request.Thursday}}>
                 <label for="thursday">Thursday</label>

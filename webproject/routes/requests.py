@@ -83,6 +83,8 @@ def generate_requests(category):
         start_date = curr_week.start_date + timedelta(days=idx)
         end_date = curr_week.start_date + timedelta(days=idx+1)
         tee_requests = [r.player_id for r in TeeRequests.query.filter(TeeRequests.week_id==curr_week.id,getattr(TeeRequests,day)==True).all()]
+        if len(tee_requests) == 0:
+            continue
         groups = group_requests(tee_requests)
         tee_times = TeeTimes.query.filter(TeeTimes.week_id==curr_week.id,TeeTimes.time >= start_date, TeeTimes.time < end_date).all()
         for idx,tee_time in enumerate(tee_times):
@@ -141,16 +143,20 @@ def view_requests():
 
 def get_committed_requests(week_id):
     result = db.session.query(
-    func.sum(TeeRequests.Monday.cast(db.Integer)).label('Monday'),
     func.sum(TeeRequests.Tuesday.cast(db.Integer)).label('Tuesday'),
     func.sum(TeeRequests.Wednesday.cast(db.Integer)).label('Wednesday'),
     func.sum(TeeRequests.Thursday.cast(db.Integer)).label('Thursday'),
     func.sum(TeeRequests.Friday.cast(db.Integer)).label('Friday'),
     func.sum(TeeRequests.Saturday.cast(db.Integer)).label('Saturday'),
-    func.sum(TeeRequests.Sunday.cast(db.Integer)).label('Sunday')
+    func.sum(TeeRequests.Sunday.cast(db.Integer)).label('Sunday'),
+    func.sum(TeeRequests.Monday.cast(db.Integer)).label('Monday')
     ).filter(TeeRequests.week_id == week_id).all()
 
-    return result[0]
+    committed = []
+    for r in result[0]:
+        committed.append(r if r else 0)
+
+    return committed
 
 def group_requests(players):
     import random
@@ -167,7 +173,7 @@ def group_requests(players):
 
     num_players = len(players)
     if num_players < 5:
-        return players
+        return [players]
     groups = []
     for qty in player_groups[num_players][:-1]:
         group = random.sample(players,qty)

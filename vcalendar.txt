@@ -1,7 +1,8 @@
+style1 = 'width:114.0pt;border:solid windowtext 1.0pt;border-bottom:double windowtext 2.25pt;background:#4472c4;padding:0in 5.4pt 0in 5.4pt;height:.25in'
 <table border="0" cellspacing="0" cellpadding="0" width="499" style="width:374.0pt;border-collapse:collapse">
 <tbody>
 <tr style="height:.25in">
-<td width="152" valign="bottom" style="width:114.0pt;border:solid windowtext 1.0pt;border-bottom:double windowtext 2.25pt;background:#4472c4;padding:0in 5.4pt 0in 5.4pt;height:.25in">
+<td width="152" valign="bottom" style="style1">
 <p class="MsoNormal" align="center" style="text-align:center"><b><span style="font-size:12.0pt;color:yellow">Day/Date/Course<u></u><u></u></span></b></p>
 </td>
 <td width="183" nowrap="" valign="bottom" style="width:137.0pt;border-top:solid windowtext 1.0pt;border-left:none;border-bottom:double windowtext 2.25pt;border-right:solid windowtext 1.0pt;background:#4472c4;padding:0in 5.4pt 0in 5.4pt;height:.25in">
@@ -12,24 +13,33 @@
 </td>
 </tr>
 <tr style="height:17.0pt">
+
 <td width="152" rowspan="4" style="width:114.0pt;border-top:none;border-left:solid windowtext 1.0pt;border-bottom:double black 2.25pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt">
 <p class="MsoNormal" align="center" style="text-align:center"><span style="font-size:12.0pt;color:black">Tuesday 09/03/24<br>
 Back to West<u></u><u></u></span></p>
 </td>
+
 <td width="183" nowrap="" valign="bottom" style="width:137.0pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt">
 </td>
+
 <td width="164" nowrap="" style="width:123.0pt;border:solid windowtext 1.0pt;border-top:none;padding:0in 5.4pt 0in 5.4pt;height:17.0pt">
 <p class="MsoNormal"><span style="font-size:12.0pt;color:black">-<u></u><u></u></span></p>
 </td>
+
 </tr>
+
 <tr style="height:16.0pt">
+
 <td width="183" nowrap="" style="width:137.0pt;border:solid windowtext 1.0pt;border-left:none;padding:0in 5.4pt 0in 5.4pt;height:16.0pt">
 <p class="MsoNormal"><span style="font-size:12.0pt;color:black">&nbsp;<u></u><u></u></span></p>
 </td>
+
 <td width="164" nowrap="" style="width:123.0pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:16.0pt">
 <p class="MsoNormal"><span style="font-size:12.0pt;color:black">-<u></u><u></u></span></p>
 </td>
+
 </tr>
+
 <tr style="height:16.0pt">
 <td width="183" nowrap="" style="width:137.0pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:16.0pt">
 <p class="MsoNormal"><span style="font-size:12.0pt;color:black">&nbsp;<u></u><u></u></span></p>
@@ -118,22 +128,29 @@ Back to West<u></u><u></u></span></p>
 <p class="MsoNormal"><span style="font-size:12.0pt;color:black">-<u></u><u></u></span></p>
 </td>
 </tr>
+
 <tr style="height:17.0pt">
 <td width="152" rowspan="4" style="width:114.0pt;border-top:none;border-left:solid windowtext 1.0pt;border-bottom:double black 2.25pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt">
 <p class="MsoNormal" align="center" style="text-align:center"><span style="font-size:12.0pt;color:black">Wednesday 09/04/24<br>
 Back to West<u></u><u></u></span></p>
 </td>
+
 <td width="183" nowrap="" style="width:137.0pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt">
 <p class="MsoNormal"><span style="font-size:12.0pt;color:black">Bob Boyd<u></u><u></u></span></p>
 </td>
+
 <td width="164" nowrap="" style="width:123.0pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt">
 <p class="MsoNormal" align="right" style="text-align:right"><span style="font-size:12.0pt;color:black">8:10<u></u><u></u></span></p>
 </td>
+
 </tr>
+
 <tr style="height:17.0pt">
+
 <td width="183" nowrap="" style="width:137.0pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt">
 <p class="MsoNormal"><span style="font-size:12.0pt;color:black">David Goldschmidt<u></u><u></u></span></p>
 </td>
+
 <td width="164" nowrap="" style="width:123.0pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:17.0pt">
 <p class="MsoNormal" align="right" style="text-align:right"><span style="font-size:12.0pt;color:black">8:10<u></u><u></u></span></p>
 </td>
