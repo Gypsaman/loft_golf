@@ -2,7 +2,7 @@ from webproject.modules.loftemail import Email
 from webproject.models import Players
 from datetime import timedelta
 from datetime import datetime as dt
-from webproject.loft_app import db
+from webproject.modules.extensions import db
 from sqlalchemy import text
 # from webproject.routes.requests import day_order
 
