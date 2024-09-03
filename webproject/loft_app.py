@@ -5,12 +5,13 @@ from webproject.modules.extensions import db,migrate
 from datetime import timedelta
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///loft.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///loft_golf.db'
 app.config['SECRET_KEY'] = 'LOFT'
 # app.permanent_session_lifetime = timedelta(minutes=5)
 
 db.init_app(app)
 migrate.init_app(app, db)
+
 
 login_manager = LoginManager()
 login_manager.login_view = "auth.login"
