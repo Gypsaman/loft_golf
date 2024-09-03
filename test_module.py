@@ -16,8 +16,8 @@ def add_players():
         new_player = Players(
             first_name=player[0],
             last_name=player[1],
-            weekday=True if player[2] == '1' else False,
-            weekend=True if player[3] == '1' else False,
+            weekend=True if player[2] == '1' else False,
+            weekday=True if player[3] == '1' else False,
             email=player[4],
             ghin = '1234',
             handicap=0,
@@ -105,10 +105,10 @@ def add_tee_times(week):
 with app.app_context():
 
     curr_week = Weeks.query.filter(Weeks.closed==False).order_by(Weeks.start_date).first()
-    add_requests(curr_week)
-    # db.create_all()
-    # add_players()
-    # add_users()
+    # add_requests(curr_week)
+    db.create_all()
+    add_players()
+    add_users()
     # add_weeks() 
 
     # for requests in TeeRequests.query.all():
