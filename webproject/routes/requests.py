@@ -30,10 +30,10 @@ def player_request(access_code):
                 if holidays.get(day):
                     days[day] = days_available[day]*4 - days_commited[idx]
                     continue
-                if idx < 5 and player.weekday:
+                if idx < 4 and player.weekday:
                     days[day] = days_available[day]*4 - days_commited[idx]
                     continue
-                if idx >= 5 and player.weekend:
+                if idx >= 4 and player.weekend:
                     days[day] = days_available[day]*4 - days_commited[idx]
 
     new = False

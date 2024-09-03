@@ -15,58 +15,58 @@
         <form class="neuro-form"  method="POST" action="/requests/update/{{request.id}}">
 
 
-            {% if 'Tuesday' in days and days['Tuesday'] > 0 %}
+            {% if 'Tuesday' in days %}
             <div class="neuro-form-entry-row">
-                <input type="checkbox" name="tuesday" id="tuesday" {{"checked" if request.Tuesday}} >
-                <label for="tuesday">Tuesday</label>
+                <input type="checkbox" name="tuesday" id="tuesday" {{"checked" if request.Tuesday}} {% if days['Tuesday'] <= 0 and not request.Tuesday %}disabled{% endif %}>
+                <label for="tuesday">Tuesday {% if days['Tuesday'] <= 0 %}(Full){% endif %} </label>
             </div>
             {% else %}
             <input type="hidden" name="tuesday" id="tuesday" >
             {% endif %}
-            {% if 'Wednesday' in days and days['Wednesday'] > 0 %}
+            {% if 'Wednesday' in days  %}
             <div class="neuro-form-entry-row">
-                <input type="checkbox" name="wednesday" id="wednesday" {{"checked" if request.Wednesday}}>
-                <label for="wednesday">Wednesday</label>
+                <input type="checkbox" name="wednesday" id="wednesday" {{"checked" if request.Wednesday}} {% if days['Wednesday'] <= 0 and not request.Wednesday %}disabled{% endif %}>
+                <label for="wednesday">Wednesday {% if days['Wednesday'] <= 0 %}(Full){% endif %}</label>
             </div>
             {% else %}
             <input type="hidden" name="wednesday" id="wednesday" >
             {% endif %}
-            {% if 'Thursday' in days and days['Thursday'] > 0%}
+            {% if 'Thursday' in days %}
             <div class="neuro-form-entry-row">
-                <input type="checkbox" name="thursday" id="thursday" {{"checked" if request.Thursday}}>
-                <label for="thursday">Thursday</label>
+                <input type="checkbox" name="thursday" id="thursday" {{"checked" if request.Thursday}} {% if days['Thursday'] <= 0 and not request.Thursday %}disabled{% endif %}>
+                <label for="thursday">Thursday {% if days['Thursday'] <= 0 %}(Full){% endif %}</label>
             </div>
             {% else %}
             <input type="hidden" name="thursday" id="thursday" >
             {% endif %}
             {% if 'Friday' in days %}
                 <div class="neuro-form-entry-row">
-                    <input type="checkbox" name="friday" id="friday" {{"checked" if request.Friday}}>
-                    <label for="friday">Friday</label>
+                    <input type="checkbox" name="friday" id="friday" {{"checked" if request.Friday}} {% if days['Friday'] <= 0 and not request.Friday %}disabled{% endif %}>
+                    <label for="friday">Friday {% if days['Friday'] <= 0 %}(Full){% endif %}</label>
                 </div>
             {% else %}
                 <input type="hidden" name="friday" id="friday" >
             {% endif %}
             {% if 'Saturday' in days %}
                 <div class="neuro-form-entry-row">
-                    <input type="checkbox" name="saturday" id="saturday" {{"checked" if request.Saturday}}>
-                    <label for="saturday">Saturday</label>
+                    <input type="checkbox" name="saturday" id="saturday" {{"checked" if request.Saturday}} {% if days['Saturday'] <= 0 and not request.Saturday %}disabled{% endif %}>
+                    <label for="saturday">Saturday {% if days['Saturday'] <= 0 %}(Full){% endif %}</label>
                 </div>
             {% else %}
                 <input type="hidden" name="saturday" id="saturday" >
             {% endif %}
             {% if 'Sunday' in days %}
                 <div class="neuro-form-entry-row">
-                    <input type="checkbox" name="sunday" id="sunday" {{"checked" if request.Sunday}}>
-                    <label for="sunday">Sunday</label>
+                    <input type="checkbox" name="sunday" id="sunday" {{"checked" if request.Sunday}} {% if days['Sunday'] <= 0 and not request.Sunday %}disabled{% endif %}>
+                    <label for="sunday">Sunday {% if days['Sunday'] <= 0 %}(Full){% endif %}</label>
                 </div>
             {% else %}
                 <input type="hidden" name="sunday" id="sunday" >
             {% endif %}
             {% if 'Monday' in days %}
             <div class="neuro-form-entry-row">
-                <input type="checkbox" name="monday" id="monday" {{"checked" if request.Monday}}>
-                <label for="monday">Monday</label>
+                <input type="checkbox" name="monday" id="monday" {{"checked" if request.Monday}} {% if days['Monday'] <= 0 and not request.Monday %}disabled{% endif %}>
+                <label for="monday">Monday {% if days['Monday'] <= 0 %}(Full){% endif %}</label>
             </div>
             {% else %}
                 <input type="hidden" name="monday" id="monday" {{"checked" if request.Monday}}>
