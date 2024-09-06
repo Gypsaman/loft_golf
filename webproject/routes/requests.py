@@ -40,10 +40,10 @@ def player_request(access_code):
     request = TeeRequests.query.filter_by(player_id=player.id, week_id=curr_week.id).first()
 
     if not request:
-        request = TeeRequests(player_id=player.id, week_id=curr_week.id,Monday=False, Tuesday=False, Wednesday=False, Thursday=False, Friday=False, Saturday=False, Sunday=False)
+        request = TeeRequests(player_id=player.id, week_id=curr_week.id,Monday=False, Tuesday=False, Wednesday=False, Thursday=False, Friday=False, Saturday=False, Sunday=False, Monday_guest=False, Tuesday_guest=False, Wednesday_guest=False, Thursday_guest=False, Friday_guest=False, Saturday_guest=False, Sunday_guest=False)
         db.session.add(request)
         db.session.commit()
-        new = True
+
     
     return render_template("requests/player_request.html", 
                            player=player,days=days,curr_week=curr_week,request=request,new=new)
@@ -65,6 +65,13 @@ def update_request_post(id):
     tee_request.Friday = True if request.form.get('friday') else False
     tee_request.Saturday = True if request.form.get('saturday') else False
     tee_request.Sunday = True if request.form.get('sunday') else False
+    tee_request.Monday_guest = True if request.form.get('monday_guest') else False
+    tee_request.Tuesday_guest = True if request.form.get('tuesday_guest') else False
+    tee_request.Wednesday_guest = True if request.form.get('wednesday_guest') else False
+    tee_request.Thursday_guest = True if request.form.get('thursday_guest') else False
+    tee_request.Friday_guest = True if request.form.get('friday_guest') else False
+    tee_request.Saturday_guest = True if request.form.get('saturday_guest') else False
+    tee_request.Sunday_guest = True if request.form.get('sunday_guest') else False
     db.session.commit()
     messaging.submission_received(tee_request)
     return redirect(url_for('requests.thank_you'))
@@ -144,13 +151,13 @@ def view_requests():
 
 def get_committed_requests(week_id):
     result = db.session.query(
-    func.sum(TeeRequests.Tuesday.cast(db.Integer)).label('Tuesday'),
-    func.sum(TeeRequests.Wednesday.cast(db.Integer)).label('Wednesday'),
-    func.sum(TeeRequests.Thursday.cast(db.Integer)).label('Thursday'),
-    func.sum(TeeRequests.Friday.cast(db.Integer)).label('Friday'),
-    func.sum(TeeRequests.Saturday.cast(db.Integer)).label('Saturday'),
-    func.sum(TeeRequests.Sunday.cast(db.Integer)).label('Sunday'),
-    func.sum(TeeRequests.Monday.cast(db.Integer)).label('Monday')
+    func.sum(TeeRequests.Tuesday.cast(db.Integer) + TeeRequests.Tuesday_guest.cast(db.Integer)).label('Tuesday'),
+    func.sum(TeeRequests.Wednesday.cast(db.Integer) + TeeRequests.Wednesday_guest.cast(db.Integer)).label('Wednesday'),
+    func.sum(TeeRequests.Thursday.cast(db.Integer) + TeeRequests.Thursday_guest.cast(db.Integer)).label('Thursday'),
+    func.sum(TeeRequests.Friday.cast(db.Integer) + TeeRequests.Friday_guest.cast(db.Integer)).label('Friday'),
+    func.sum(TeeRequests.Saturday.cast(db.Integer) + TeeRequests.Saturday_guest.cast(db.Integer)).label('Saturday'),
+    func.sum(TeeRequests.Sunday.cast(db.Integer) + TeeRequests.Sunday_guest.cast(db.Integer)).label('Sunday'),
+    func.sum(TeeRequests.Monday.cast(db.Integer) + TeeRequests.Monday_guest.cast(db.Integer)).label('Monday')
     ).filter(TeeRequests.week_id == week_id).all()
 
     committed = []

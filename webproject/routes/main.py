@@ -1,6 +1,6 @@
 from flask import Blueprint, redirect, render_template,  request, url_for
-from flask_login import current_user, login_required
-from webproject.modules.table_creator import Field, TableCreator, timestamp_to_date, true_false
+from flask_login import login_required
+
 
 
 main = Blueprint('main', __name__)

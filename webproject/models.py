@@ -54,6 +54,13 @@ class TeeRequests(db.Model):
     Friday = db.Column(db.Boolean, nullable=False)
     Saturday = db.Column(db.Boolean, nullable=False)
     Sunday = db.Column(db.Boolean, nullable=False)
+    Monday_guest = db.Column(db.Boolean, nullable=False, default=False)
+    Tuesday_guest = db.Column(db.Boolean, nullable=False, default=False)
+    Wednesday_guest = db.Column(db.Boolean, nullable=False, default=False)
+    Thursday_guest = db.Column(db.Boolean, nullable=False, default=False)
+    Friday_guest = db.Column(db.Boolean, nullable=False,default=False)
+    Saturday_guest = db.Column(db.Boolean, nullable=False,default=False)
+    Sunday_guest = db.Column(db.Boolean, nullable=False,default=False)
     player = db.relationship('Players', backref='teerequests')
     week = db.relationship('Weeks', backref='teerequests')
 

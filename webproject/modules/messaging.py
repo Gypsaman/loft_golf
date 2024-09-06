@@ -16,7 +16,10 @@ def submission_received(submission):
     body += f"for the week of {curr_week.start_date.strftime('%B %d')} through {curr_week.end_date.strftime('%B %d')}:\n\n"
     for idx,day in enumerate(day_order):
         if getattr(submission,day):
-            body += f"{day}, {(curr_week.start_date + timedelta(days=idx)).strftime('%B %d')}\n"
+            body += f"{day}, {(curr_week.start_date + timedelta(days=idx)).strftime('%B %d')}"
+            if getattr(submission,day+'_guest'):
+                body += " with a guest"
+            body += "\n"
     body += "\n\nYou will receive an email when your tee times are assigned.\n\n"
     email.send_email('gypsaman@gmail.com','Tee Time Request Received',body)
 
