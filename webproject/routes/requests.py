@@ -90,10 +90,14 @@ def generate_requests(category):
     for idx,day in enumerate(days_used):
         start_date = curr_week.start_date + timedelta(days=idx+offset)
         end_date = curr_week.start_date + timedelta(days=idx+offset+1)
-        tee_requests = [r.player_id for r in TeeRequests.query.filter(TeeRequests.week_id==curr_week.id,getattr(TeeRequests,day)==True).all()]
-        if len(tee_requests) == 0:
-            continue
-        groups = group_requests(tee_requests)
+        while True:  # Randomly a group can become larger than 4 depending on the guests.  If so, try again.
+            tee_requests = [r.player_id for r in TeeRequests.query.filter(TeeRequests.week_id==curr_week.id,getattr(TeeRequests,day)==True).all()]
+            guest_request =  [r.player_id for r in TeeRequests.query.filter(TeeRequests.week_id==curr_week.id,getattr(TeeRequests,day+'_guest')==True).all()]
+            if len(tee_requests) == 0:
+                continue
+            groups = group_requests(tee_requests,guest_request)
+            if len([group for group in groups if len(group) > 4]) == 0:
+                break
         tee_times = TeeTimes.query.filter(TeeTimes.week_id==curr_week.id,TeeTimes.time >= start_date, TeeTimes.time < end_date).all()
         for idx,tee_time in enumerate(tee_times):
             if idx >= len(groups):
@@ -166,7 +170,7 @@ def get_committed_requests(week_id):
 
     return committed
 
-def group_requests(players):
+def group_requests(players,guests):
     import random
     player_groups = {
         12:[4,4,4],
@@ -179,15 +183,33 @@ def group_requests(players):
         5:[2,3],
     }
 
-    num_players = len(players)
+    num_players = len(players)+len(guests)
     if num_players < 5:
-        return [players]
+        return [players+guests]
     groups = []
-    for qty in player_groups[num_players][:-1]:
-        group = random.sample(players,qty)
+    for qty in player_groups[num_players]:
+        group = random.sample(players,qty if qty < len(players) else len(players))
+        group = check_guests(group,guests,qty)
         groups.append(group)
         for player in group:
-            players.remove(player)
-    groups.append(players)
+            if player in players:
+                players.remove(player)
 
     return groups
+
+def check_guests(group,guests,group_len):
+    result = []
+    for guest in guests:
+        if guest in group:
+            result.append(guest)
+            result.append(guest)
+            group.remove(guest)
+        if len(result) == group_len:
+            return result
+    for player in group:
+        if len(result) >= group_len:
+            break
+        result.append(player)
+    
+    return result
+            

@@ -4,7 +4,7 @@
 <div class="neuro-content">
     <h1>{{player.first_name}}</h1>
     <h2>Here are the Dates Available</h2>
-    <p>Week of {{curr_week.start_date.strftime('%b-%d')}}</p>
+    <h2>Week of {{curr_week.start_date.strftime('%b-%d')}}</h2>
     {% with messages = get_flashed_messages() %} {% if messages %}
     <div class="notification is-danger">
         {{ messages[0] }}. Go to
