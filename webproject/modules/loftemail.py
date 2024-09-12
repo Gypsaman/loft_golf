@@ -10,7 +10,7 @@ import time
 import os
 from typing import List,Dict
 import imaplib
-from dotenv import load_dotenv
+from webproject.modules.dotenv_util import initialize_dotenv
 
 
 servers = {
@@ -18,7 +18,7 @@ servers = {
     "DNA": { "emailServer": "smtp.ionos.com", "emailPort": 587, "emailAccount": "cesar@distributedneuralapplications.com","password_source":"NeuroEmail"},
     "LOFT": {"emailServer": "smtp.privateemail.com", "emailPort": 587, "emailAccount":"loft@neurodna.xyz","password_source":"LOFTPassword"}
 }
-load_dotenv()
+initialize_dotenv()
 
 class Email:
     

@@ -1,5 +1,5 @@
 from webproject.modules.loftemail import Email
-from webproject.models import Players
+from webproject.models import Players, TeeTimes
 from datetime import timedelta
 from datetime import datetime as dt
 from webproject.modules.extensions import db
@@ -102,4 +102,63 @@ def tee_time_table(teetimes):
 
     return html
 
+def tee_times_available(curr_week,category):
+    start = 0 if category == 'weekday' else 4
+    end = 3 if category == 'weekday' else 6
+    start_date = curr_week.start_date  + timedelta(days=start)
+    end_date = curr_week.start_date + timedelta(days=end)
 
+    teetimes = TeeTimes.query.filter(TeeTimes.time>=start_date,TeeTimes.time <= end_date).order_by(TeeTimes.time).all()
+    teetable =  tee_avail_table(teetimes)
+
+    body = f"Here are the tee times availables "
+    body += f"for {start_date.strftime('%b-%d')} to {(end_date - timedelta(days=1)).strftime('%b-%d')}:\n\n"
+
+
+    email = Email()
+    sql = "Select players.first_name, players.last_name, players.email, players.access_code from Players"
+    sql += f" where {category} and players.first_name = 'Test'"
+    players = list(db.session.execute(text(sql)))
+    for player in players:
+        email_body = f'{player.first_name},\n\n' + body
+        email_body += f'\nPlease follow the link below to request your tee times\n\n'
+        email_body += f'loft.neurodna.xyz/requests/{player.access_code}\n\n\n'
+        email.send_multipart_email('gypsaman@gmail.com','Tee Times Available',email_body,teetable)
+        break
+
+def tee_avail_table(teetimes):
+    dates_avail = {}
+    for teetime in teetimes:
+        day =  teetime.time.strftime('%A %b %d') 
+        if day not in dates_avail:
+            dates_avail[day]  = []
+        dates_avail[day].append(teetime.time.strftime('%H:%M'))
+
+    html = '<table>'+'\n'
+    html += '<tbody>'+'\n'
+    html += '<tr style="height:.25in">'+'\n'
+    html += '<td style="width:2in;background-color:#4472c4;; color:yellow;text-align: center;">Date</td>'+'\n'
+    html += '<td style="width:1in;background-color:#4472c4;; color:yellow;text-align: center;">Tee Time</td>'+'\n'
+    html += '</tr>'+'\n'
+    
+    curr_tee = None
+    for teedate,times in dates_avail.items():
+        html += '<tr>'+'\n'
+
+        html += f'<td rowspan={len(times)}>'+ teedate + '</td>'+'\n'
+        for time in times:
+            html += f'<td style="width:1in">{time}</td>\n'
+            html += '</tr>'+'\n'
+            html += '<tr>\n'
+        html += '</tr>'
+        html += '<tr><td style="background-color:blue"></td><td style="background-color:blue"></td></tr>'+'\n'
+
+               
+    
+
+    html += '<tr><td style="background-color:blue"></td><td style="background-color:blue"></td></tr>'+'\n'
+    html += '</tbody>'+'\n'
+
+    html += '</table>'+'\n'
+
+    return html
