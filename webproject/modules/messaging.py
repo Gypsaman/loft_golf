@@ -4,7 +4,6 @@ from datetime import timedelta
 from datetime import datetime as dt
 from webproject.modules.extensions import db
 from sqlalchemy import text
-# from webproject.routes.requests import day_order
 
 def submission_received(submission):
     day_order = ['Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday','Monday']
@@ -21,7 +20,7 @@ def submission_received(submission):
                 body += " with a guest"
             body += "\n"
     body += "\n\nYou will receive an email when your tee times are assigned.\n\n"
-    email.send_email('gypsaman@gmail.com','Tee Time Request Received',body)
+    email.send_email(player.email,'Tee Time Request Received',body)
 
 def tee_time_assigned(curr_week,category):
     start = 0 if category == 'weekday' else 4
@@ -46,8 +45,7 @@ def tee_time_assigned(curr_week,category):
     email = Email()
     for teetime in teetimes:
         email_body = f'{teetime.first_name},\n\n' + body
-        email.send_multipart_email('gypsaman@gmail.com','Tee Time Assignment',email_body,teetable)
-        break
+        email.send_multipart_email(teetime.email,'Tee Time Assignment',email_body,teetable)
 
 
 def tee_time_added(tee_time,is_old,is_dup,requester):
@@ -122,8 +120,8 @@ def tee_times_available(curr_week,category):
     for player in players:
         email_body = f'{player.first_name},\n\n' + body
         email_body += f'\nPlease follow the link below to request your tee times\n\n'
-        email_body += f'loft.neurodna.xyz/requests/{player.access_code}\n\n\n'
-        email.send_multipart_email('gypsaman@gmail.com','Tee Times Available',email_body,teetable)
+        email_body += f'loft.neurodna.xyz/requests/{category}/{player.access_code}\n\n\n'
+        email.send_multipart_email(player.email,'Tee Times Available',email_body,teetable)
         break
 
 def tee_avail_table(teetimes):

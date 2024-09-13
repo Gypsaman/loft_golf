@@ -156,11 +156,11 @@ class TableCreator:
                 
                 self.id = item[0]
                 if "Edit" in self.actions:
-                    html += f'<a href="/{self.domain}update/{self.id}"><img src="\static\imgs\pen.svg"></a>'
+                    html += f'<a href="/{self.domain}update/{self.id}"><img src="/static/imgs/pen.svg"></a>'
                 if "Delete" in self.actions:
                     html += f'<a href="/{self.domain}delete/{self.id}" onclick="return confirm(\'Are you sure you want to delete?\')"><img src="\static\imgs\\trash.svg"></a>'
                 if "View" in self.actions:
-                    html += f'<a href="/{self.domain}view/{self.id}"><img src="\static\imgs\\binoculars.svg"></a>'
+                    html += f'<a href="/{self.domain}view/{self.id}"><img src="/static/imgs/binoculars.svg"></a>'
                 html += '</div></td>'
             html += '</tr>'
 

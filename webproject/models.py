@@ -67,22 +67,16 @@ class TeeRequests(db.Model):
     def __repr__(self):
         return f'Player: {self.player.first_name} Week: {self.week.start_date.strftime("%b-%d")} Monday: {self.Monday}, Tuesday: {self.Tuesday}, Wednesday: {self.Wednesday}, Thursday: {self.Thursday}, Friday: {self.Friday}, Saturday: {self.Saturday}, Sunday: {self.Sunday}'
 
-# class TeeRequests(db.Model):
-#     __tablename__ = 'teerequests'
-#     id = db.Column(db.Integer, primary_key=True)
-#     player_id = db.Column(db.Integer, db.ForeignKey('players.id'))
-#     week_id = db.Column(db.Integer, db.ForeignKey('weeks.id'))
-#     date_requested = db.Column(db.DateTime, nullable=False)
-#     processed = db.Column(db.Boolean, nullable=False,default=False)
-#     player = db.relationship('Players', backref='teerequests')
-#     week = db.relationship('Weeks', backref='teerequests')
-
 
 class Weeks(db.Model):
     __tablename__ = 'weeks'
     id = db.Column(db.Integer, primary_key=True)
     start_date = db.Column(db.DateTime, nullable=False)
     end_date = db.Column(db.DateTime, nullable=False)
+    weekday_request = db.Column(db.Boolean,nullable=False,default=False)
+    weekend_request = db.Column(db.Boolean,nullable=False,default=False)
+    weekday_teetimes = db.Column(db.Boolean,nullable=False,default=False)
+    weekend_teetimes = db.Column(db.Boolean,nullable=False,default=False)
     closed = db.Column(db.Boolean, nullable=False)
     
     def __repr__(self):

@@ -15,8 +15,8 @@ requests = Blueprint('requests', __name__)
 
 day_order = ['Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday','Monday']
 
-@requests.route('/requests/<access_code>')
-def player_request(access_code):
+@requests.route('/requests/<category>/<access_code>')
+def player_request(category,access_code):
     player = Players.query.filter_by(access_code=access_code).first()
     curr_week = Weeks.query.filter(Weeks.closed==False).order_by(Weeks.start_date).first()
     teetimes = TeeTimes.query.filter_by(week_id=curr_week.id).all()
@@ -46,32 +46,34 @@ def player_request(access_code):
 
     
     return render_template("requests/player_request.html", 
-                           player=player,days=days,curr_week=curr_week,request=request,new=new)
+                           player=player,days=days,curr_week=curr_week,request=request,category=category)
 
-@requests.route('/requests/update/<int:id>', methods=['GET'])
+@requests.route('/requests/update/<category>/<int:id>', methods=['GET'])
 @login_required
-def update_request(id):
+def update_request(category,id):
     tee_request = TeeRequests.query.filter_by(id=id).first()
     player = Players.query.filter_by(id=tee_request.player_id).first()
     return redirect(url_for('requests.player_request',access_code=player.access_code))
 
-@requests.route('/requests/update/<int:id>', methods=['POST'])
-def update_request_post(id):
+@requests.route('/requests/update/<category>/<int:id>', methods=['POST'])
+def update_request_post(category,id):
     tee_request = TeeRequests.query.filter_by(id=id).first()
-    tee_request.Monday = True if request.form.get('monday') else False
-    tee_request.Tuesday = True if request.form.get('tuesday') else False
-    tee_request.Wednesday = True if request.form.get('wednesday') else False
-    tee_request.Thursday = True if request.form.get('thursday') else False
-    tee_request.Friday = True if request.form.get('friday') else False
-    tee_request.Saturday = True if request.form.get('saturday') else False
-    tee_request.Sunday = True if request.form.get('sunday') else False
-    tee_request.Monday_guest = True if request.form.get('monday_guest') else False
-    tee_request.Tuesday_guest = True if request.form.get('tuesday_guest') else False
-    tee_request.Wednesday_guest = True if request.form.get('wednesday_guest') else False
-    tee_request.Thursday_guest = True if request.form.get('thursday_guest') else False
-    tee_request.Friday_guest = True if request.form.get('friday_guest') else False
-    tee_request.Saturday_guest = True if request.form.get('saturday_guest') else False
-    tee_request.Sunday_guest = True if request.form.get('sunday_guest') else False
+    if category == 'weekday':
+        tee_request.Tuesday = True if request.form.get('tuesday') else False
+        tee_request.Wednesday = True if request.form.get('wednesday') else False
+        tee_request.Thursday = True if request.form.get('thursday') else False
+        tee_request.Friday = True if request.form.get('friday') else False
+        tee_request.Tuesday_guest = True if request.form.get('tuesday_guest') else False
+        tee_request.Wednesday_guest = True if request.form.get('wednesday_guest') else False
+        tee_request.Thursday_guest = True if request.form.get('thursday_guest') else False
+        tee_request.Friday_guest = True if request.form.get('friday_guest') else False
+    if category == 'weekend':
+        tee_request.Monday = True if request.form.get('monday') else False
+        tee_request.Saturday = True if request.form.get('saturday') else False
+        tee_request.Sunday = True if request.form.get('sunday') else False
+        tee_request.Monday_guest = True if request.form.get('monday_guest') else False
+        tee_request.Saturday_guest = True if request.form.get('saturday_guest') else False
+        tee_request.Sunday_guest = True if request.form.get('sunday_guest') else False
     db.session.commit()
     messaging.submission_received(tee_request)
     return redirect(url_for('requests.thank_you'))
