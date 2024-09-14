@@ -8,7 +8,7 @@ from collections import Counter
 from sqlalchemy import func
 from webproject.modules.table_creator import Field, TableCreator, true_false, time_to_day_time
 from webproject.modules import messaging
-from webproject.modules.processing import get_curr_week,day_order,generate
+from webproject.modules.utils import get_curr_week,day_order,generate
 from sqlalchemy import text
 
 

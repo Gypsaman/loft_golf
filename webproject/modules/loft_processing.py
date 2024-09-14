@@ -16,7 +16,7 @@ weekday_teetime = 'Monday'
 weekend_request = 'Saturday'
 weekend_teetime = 'Wednesday'
 
-def process():
+def loft_process():
     with app.app_context():
 
         curr_week = get_curr_week()
@@ -56,4 +56,4 @@ def sleep_until_midnight():
     time.sleep(sleep_time)
 
 if __name__ == '__main__':
-    process()
+    loft_process()
