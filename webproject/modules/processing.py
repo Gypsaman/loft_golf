@@ -54,3 +54,6 @@ def sleep_until_midnight():
     next_cycle.replace(hour=0,minute=1,second=0)
     sleep_time = (next_cycle-dt.now()).total_seconds()
     time.sleep(sleep_time)
+
+if __name__ == '__main__':
+    process()
