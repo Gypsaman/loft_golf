@@ -57,15 +57,14 @@ class Email:
             self.mailserver.sendmail(self.emailAccount,recipients,em.as_string())
             
             
-    def send_multipart_email(self,recipient,subject,body,html,carboncopy=None) -> None:
-        msg = MIMEMultipart()
+    def send_multipart_email(self,recipient,subject,html,carboncopy=None) -> None:
+        msg = MIMEMultipart('alternative')
         msg['From'] = self.emailAccount
         msg['To'] = recipient
         if carboncopy is not None:
             msg['Cc'] = carboncopy
         msg['Subject'] = subject
 
-        msg.attach(MIMEText(body, 'plain'))
         msg.attach(MIMEText(html, 'html'))
 
         self.mailserver.send_message(msg)

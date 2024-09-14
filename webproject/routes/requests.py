@@ -8,17 +8,18 @@ from collections import Counter
 from sqlalchemy import func
 from webproject.modules.table_creator import Field, TableCreator, true_false, time_to_day_time
 from webproject.modules import messaging
+from webproject.modules.processing import get_curr_week,day_order,generate
 from sqlalchemy import text
 
 
 requests = Blueprint('requests', __name__)
 
-day_order = ['Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday','Monday']
+
 
 @requests.route('/requests/<category>/<access_code>')
 def player_request(category,access_code):
     player = Players.query.filter_by(access_code=access_code).first()
-    curr_week = Weeks.query.filter(Weeks.closed==False).order_by(Weeks.start_date).first()
+    curr_week = get_curr_week()
     teetimes = TeeTimes.query.filter_by(week_id=curr_week.id).all()
     days_available = Counter([dt.strftime(teetime.time,"%A") for teetime in teetimes])
     holidays = {teetime.time.strftime("%A"):teetime.holiday for teetime in teetimes}
@@ -86,32 +87,8 @@ def thank_you():
 @requests.route('/requests/generate/<category>')
 @login_required
 def generate_requests(category):
-    curr_week = Weeks.query.filter(Weeks.closed==False).order_by(Weeks.start_date).first()
-    days_used = day_order[:4] if category == 'weekday' else day_order[4:]
-    offset = 0 if category == 'weekday' else 4
-    for idx,day in enumerate(days_used):
-        start_date = curr_week.start_date + timedelta(days=idx+offset)
-        end_date = curr_week.start_date + timedelta(days=idx+offset+1)
-        while True:  # Randomly a group can become larger than 4 depending on the guests.  If so, try again.
-            tee_requests = [r.player_id for r in TeeRequests.query.filter(TeeRequests.week_id==curr_week.id,getattr(TeeRequests,day)==True).all()]
-            guest_request =  [r.player_id for r in TeeRequests.query.filter(TeeRequests.week_id==curr_week.id,getattr(TeeRequests,day+'_guest')==True).all()]
-            if len(tee_requests) == 0:
-                continue
-            groups = group_requests(tee_requests,guest_request)
-            if len([group for group in groups if len(group) > 4]) == 0:
-                break
-        tee_times = TeeTimes.query.filter(TeeTimes.week_id==curr_week.id,TeeTimes.time >= start_date, TeeTimes.time < end_date).all()
-        for idx,tee_time in enumerate(tee_times):
-            if idx >= len(groups):
-                break
-            group = groups[idx]
-            for player in group:
-                if is_player_booked(player,tee_time):
-                    continue
-                tee_time_player = TeeTimePlayers(player_id=player,tee_time_id=tee_time.id)
-                db.session.add(tee_time_player)
-        db.session.commit()
-        messaging.tee_time_assigned(curr_week,category)
+    generate(category)
+    
     return redirect(url_for('teetimes.pairings',page=1))
 
 def is_player_booked(player,tee_time):
@@ -130,7 +107,7 @@ def is_player_booked(player,tee_time):
 @requests.route('/requests')
 @login_required
 def view_requests():
-    curr_week = Weeks.query.filter(Weeks.closed==False).order_by(Weeks.start_date).first()
+    curr_week = get_curr_week()
     fields = {
         'teerequests.id': Field(None,None),
         'players.first_name': Field(None,'First Name'),

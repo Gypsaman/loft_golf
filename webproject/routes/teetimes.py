@@ -1,6 +1,7 @@
 from flask import Blueprint, redirect, render_template,  request, url_for, flash
 from flask_login import login_required
 from webproject.modules.extensions import db
+from webproject.modules.utils import get_curr_week
 from webproject.models import TeeTimes, Weeks, TeeTimePlayers, Players
 from webproject.modules.table_creator import TableCreator, Field, time_to_day_time, time_to_hourminute, time_to_day_date
 from datetime import datetime as dt
@@ -63,7 +64,7 @@ def delete_teetime(id):
 @teetimes.route('/pairings/<int:page>')
 @login_required
 def pairings(page):
-    curr_week = Weeks.query.filter(Weeks.closed==False).order_by(Weeks.start_date).first()
+    curr_week = get_curr_week()
 
     stmt = "select TeeTimes.time as Day, Players.first_name,Players.last_name, TeeTimes.time as Time from teetimeplayers "
     stmt += " inner join players on teetimeplayers.player_id=players.id "

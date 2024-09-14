@@ -14,6 +14,10 @@ def weeks_table():
         'id': Field(None,None),
         'start_date': Field(timestamp_to_date,'Start Date'),
         'end_date': Field(timestamp_to_date,'End Date'),
+        'weekday_request': Field(true_false,'Weekday Request'),
+        'weekend_request': Field(true_false,'Weekend Request'),
+        'weekday_teetimes': Field(true_false,'Weekday Tee Times'),
+        'weekend_teetimes': Field(true_false,'Weekend Tee Times'),
         'closed': Field(true_false,'Closed')
     }
     table_creator = TableCreator('Weeks', fields,actions=['Edit', 'Delete'])

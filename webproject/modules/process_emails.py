@@ -1,4 +1,5 @@
 from webproject.modules.loftemail import Email
+from webproject.modules.utils import get_curr_week
 from datetime import datetime as dt
 from datetime import timedelta
 from webproject.models import TeeTimes, Weeks
@@ -46,14 +47,6 @@ def get_week_start_end(date):
     end_date = start_date + timedelta(days=6)
     return start_date.replace(hour=0,minute=0,second=0), end_date.replace(hour=23,minute=59,second=59)
 
-def get_curr_week():
-    curr_week = Weeks.query.filter(Weeks.closed==False).order_by(Weeks.start_date).first()
-    if curr_week:
-        return curr_week
-    curr_week = Weeks.query.filter(Weeks.closed==True).order_by(Weeks.start_date.desc()).first()
-    if curr_week:
-        return curr_week
-    return None
 
 if __name__ == '__main__':
     with app.app_context():

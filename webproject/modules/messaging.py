@@ -1,4 +1,5 @@
 from webproject.modules.loftemail import Email
+from webproject.modules.utils import get_curr_week, day_order
 from webproject.models import Players, TeeTimes
 from datetime import timedelta
 from datetime import datetime as dt
@@ -6,7 +7,7 @@ from webproject.modules.extensions import db
 from sqlalchemy import text
 
 def submission_received(submission):
-    day_order = ['Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday','Monday']
+
     curr_week = submission.week
     player = Players.query.filter_by(id=submission.player_id).first()
     email = Email()
@@ -45,7 +46,7 @@ def tee_time_assigned(curr_week,category):
     email = Email()
     for teetime in teetimes:
         email_body = f'{teetime.first_name},\n\n' + body
-        email.send_multipart_email(teetime.email,'Tee Time Assignment',email_body,teetable)
+        email.send_multipart_email(teetime.email,'Tee Time Assignment',email_body,teetable,carboncopy='gypsaman@gmail.com')
 
 
 def tee_time_added(tee_time,is_old,is_dup,requester):
@@ -107,7 +108,7 @@ def tee_times_available(curr_week,category):
     end_date = curr_week.start_date + timedelta(days=end)
 
     teetimes = TeeTimes.query.filter(TeeTimes.time>=start_date,TeeTimes.time <= end_date).order_by(TeeTimes.time).all()
-    teetable =  tee_avail_table(teetimes)
+
 
     body = f"Here are the tee times availables "
     body += f"for {start_date.strftime('%b-%d')} to {(end_date - timedelta(days=1)).strftime('%b-%d')}:\n\n"
@@ -115,16 +116,19 @@ def tee_times_available(curr_week,category):
 
     email = Email()
     sql = "Select players.first_name, players.last_name, players.email, players.access_code from Players"
-    sql += f" where {category} and players.first_name = 'Test'"
+    sql += f" where {category} "
     players = list(db.session.execute(text(sql)))
     for player in players:
-        email_body = f'{player.first_name},\n\n' + body
-        email_body += f'\nPlease follow the link below to request your tee times\n\n'
-        email_body += f'loft.neurodna.xyz/requests/{category}/{player.access_code}\n\n\n'
-        email.send_multipart_email(player.email,'Tee Times Available',email_body,teetable)
-        break
 
-def tee_avail_table(teetimes):
+        email_body = f'<p>{player.first_name},\n\n</p>'
+        email_body += f'<p>{body}</p>'
+        email_body += '<p>\nPlease follow the link below to request your tee times\n\n</p>'
+        email_body += f'<a href="loft.neurodna.xyz/requests/{category}/{player.access_code}" >Click to Request</a>'
+        email_body += '<p>\n\n</p>'
+        email_body +=  tee_avail_table(teetimes,email_body)
+        email.send_multipart_email(player.email,'Tee Times Available',email_body,carboncopy='gypsaman@gmail.com')
+
+def tee_avail_table(teetimes,email_body):
     dates_avail = {}
     for teetime in teetimes:
         day =  teetime.time.strftime('%A %b %d') 
