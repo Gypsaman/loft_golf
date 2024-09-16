@@ -23,7 +23,7 @@ def generate(category):
             groups = group_requests(tee_requests,guest_request)
             if len([group for group in groups if len(group) > 4]) == 0:
                 break
-        tee_times = TeeTimes.query.filter(TeeTimes.week_id==curr_week.id,TeeTimes.time >= start_date, TeeTimes.time < end_date).all()
+        tee_times = TeeTimes.query.filter(TeeTimes.week_id==curr_week.id,TeeTimes.time >= start_date, TeeTimes.time < end_date).order_by(TeeTimes.time).all()
         for idx,tee_time in enumerate(tee_times):
             if idx >= len(groups):
                 break

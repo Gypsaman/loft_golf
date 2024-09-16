@@ -1,6 +1,7 @@
 # from webproject.modules.process_emails import process_emails
-# from webproject.loft_app import app, db
-# from webproject.models import Players, User, Weeks, TeeTimes, TeeRequests, TeeTimePlayers
+from webproject.loft_app import app
+from webproject.modules.extensions import db
+from webproject.models import Players, User, Weeks, TeeTimes, TeeRequests, TeeTimePlayers
 # from collections import Counter
 # from webproject.routes.requests import get_committed_requests, day_order, group_requests,is_player_booked
 # from datetime import datetime as dt
@@ -9,20 +10,16 @@
 # from webproject.modules  import messaging 
 # from webproject.modules.loftemail import Email
 from webproject.modules.process_emails import process_emails
+from webproject.modules.utils import get_curr_week
+from webproject.modules import messaging
+from webproject.modules.generate import generate
 
 
-# with app.app_context():
-#     # curr_week = Weeks.query.filter(Weeks.closed==False).order_by(Weeks.start_date).first()
-#     category = 'weekday'
-    
-#     sql = "Select * from Players"
-#     sql += f" where {category}"
-#     players = list(db.session.execute(text(sql)))
-#     for player in players:
-#         print(player.id,player.first_name,player.last_name)
+with app.app_context():
 
-from webproject.modules.loft_processing import loft_process
-
-loft_process()
+   for t in TeeTimePlayers.query.all():
+        db.session.delete(t)
+   db.session.commit()
+   generate('weekday')
 
 

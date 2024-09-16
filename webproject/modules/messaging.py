@@ -37,7 +37,7 @@ def tee_time_assigned(curr_week,category):
     sql += " order by teetimes.time"
 
     teetimes = list(db.session.execute(text(sql)))
-    teetable =  tee_time_table(teetimes)
+    teetable =  tee_time_table(teetimes,golfer=True)
 
     body = f"Here are the tee times you requested, along with the other pairings "
     body += f"for {start_date.strftime('%b-%d')} to {(end_date - timedelta(days=1)).strftime('%b-%d')}:\n\n"
@@ -66,6 +66,7 @@ def tee_time_added(tee_time,is_old,is_dup,requester):
 
 
 def tee_time_table(teetimes):
+
     html = '<table>'+'\n'
     html += '<tbody>'+'\n'
     html += '<tr style="height:.25in">'+'\n'
@@ -114,6 +115,11 @@ def tee_times_available(curr_week,category):
     end_date = curr_week.start_date + timedelta(days=end)
 
     teetimes = TeeTimes.query.filter(TeeTimes.time>=start_date,TeeTimes.time <= end_date).order_by(TeeTimes.time).all()
+
+    # sql = "Select teetimes.time from teetimes"
+    # sql += f" where teetimes.time >= '{start_date}' and teetimes.time < '{end_date}'"
+    # sql += " order by teetimes.time"
+    # teetimes = list(db.session.execute(text(sql)))
 
 
     body = f"Here are the tee times availables "
@@ -165,6 +171,55 @@ def tee_avail_table(teetimes,email_body):
     
 
     html += '<tr><td style="background-color:blue"></td><td style="background-color:blue"></td></tr>'+'\n'
+    html += '</tbody>'+'\n'
+
+    html += '</table>'+'\n'
+
+    return html
+
+def tee_table(teetimes,golfer=True):
+    dates_avail = {}
+    for teetime in teetimes:
+        teedate = dt.strptime(teetime.time[:-10],"%Y-%m-%d %H:%M")
+        day =  teedate.strftime('%A %b %d') 
+        if day not in dates_avail:
+            dates_avail[day]  = []
+        golfer_name = teetime.first_name + ' ' + teetime.last_name if golfer else ''
+            
+        dates_avail[day].append({"teetime":teedate.strftime('%H:%M'),"golfer":golfer_name})
+
+    html = '<table>'+'\n'
+    html += '<tbody>'+'\n'
+    html += '<tr style="height:.25in">'+'\n'
+    html += '<td style="width:2in;background-color:#4472c4;; color:yellow;text-align: center;">Date</td>'+'\n'
+    if golfer:
+            html += '<td style="width:3in;background-color:#4472c4;; color:yellow;text-align: center;">Golfer</td>'+'\n'
+    html += '<td style="width:1in;background-color:#4472c4;; color:yellow;text-align: center;">Tee Time</td>'+'\n'
+    html += '</tr>'+'\n'
+    
+    curr_tee = None
+    for teedate,times in dates_avail.items():
+        html += '<tr>'+'\n'
+
+        html += f'<td rowspan={len(times)}>'+ teedate + '</td>'+'\n'
+        for time in times:
+            if golfer:
+                html += f'<td style="width:1in">{time['golfer']}</td>\n'
+            html += f'<td style="width:1in">{time['teetime']}</td>\n'
+            html += '</tr>'+'\n'
+            html += '<tr>\n'
+        html += '</tr>'
+        html += f'<tr>'
+        if golfer:
+            html += '<td style="background-color:blue"></td>'
+        html += '<td style="background-color:blue"></td><td style="background-color:blue"></td></tr>'+'\n'
+
+               
+    html += f'<tr>'
+    if golfer:
+        html += '<td style="background-color:blue"></td>'
+    html += '<td style="background-color:blue"></td><td style="background-color:blue"></td></tr>'+'\n'
+
     html += '</tbody>'+'\n'
 
     html += '</table>'+'\n'
