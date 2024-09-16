@@ -44,9 +44,15 @@ def tee_time_assigned(curr_week,category):
 
 
     email = Email()
+    player_sent = []
     for teetime in teetimes:
-        email_body = f'{teetime.first_name},\n\n' + body
-        email.send_multipart_email(teetime.email,'Tee Time Assignment',email_body,teetable,carboncopy='gypsaman@gmail.com')
+        if teetime.email in player_sent:
+            continue
+        player_sent.append(teetime.email)
+        email_body = f'<p>{teetime.first_name},\n\n</p>'
+        email_body +=f'<p>{body}</p>'
+        email_body += teetable
+        email.send_multipart_email(teetime.email,'Tee Time Assignment',email_body,carboncopy='gypsaman@gmail.com')
 
 
 def tee_time_added(tee_time,is_old,is_dup,requester):

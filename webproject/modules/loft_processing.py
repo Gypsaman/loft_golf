@@ -1,7 +1,8 @@
 from webproject.modules import messaging
 from webproject.loft_app import app
 from webproject.modules.extensions import db
-from webproject.modules.utils import get_curr_week, generate, day_order
+from webproject.modules.utils import get_curr_week, day_order
+from webproject.modules.generate import generate
 from datetime import datetime as dt
 from datetime import timedelta
 import time

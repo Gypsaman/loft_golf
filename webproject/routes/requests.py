@@ -8,7 +8,8 @@ from collections import Counter
 from sqlalchemy import func
 from webproject.modules.table_creator import Field, TableCreator, true_false, time_to_day_time
 from webproject.modules import messaging
-from webproject.modules.utils import get_curr_week,day_order,generate
+from webproject.modules.utils import get_curr_week,day_order
+from webproject.modules.generate import generate
 from sqlalchemy import text
 
 
@@ -91,17 +92,6 @@ def generate_requests(category):
     
     return redirect(url_for('teetimes.pairings',page=1))
 
-def is_player_booked(player,tee_time):
-    start_date = tee_time.time.replace(hour=0,minute=0,second=0)
-    end_date = tee_time.time.replace(hour=23,minute=59,second=59)
-    sql = "Select TeeTimePlayers.id from teetimeplayers"
-    sql += " join teetimes on teetimeplayers.tee_time_id = teetimes.id "
-    sql += f" where teetimeplayers.player_id = {player} and teetimes.time > '{start_date}' and teetimes.time < '{end_date}'"
-
-    results = list(db.session.execute(text(sql)))
-
-    return len(results) > 0
-    
 
 
 @requests.route('/requests')
@@ -149,46 +139,4 @@ def get_committed_requests(week_id):
 
     return committed
 
-def group_requests(players,guests):
-    import random
-    player_groups = {
-        12:[4,4,4],
-        11:[3,4,4],
-        10:[2,4,4],
-        9:[3,3,3],
-        8:[2,3,3],
-        7:[3,4],
-        6:[3,3],
-        5:[2,3],
-    }
 
-    num_players = len(players)+len(guests)
-    if num_players < 5:
-        return [players+guests]
-    groups = []
-    for qty in player_groups[num_players]:
-        group = random.sample(players,qty if qty < len(players) else len(players))
-        group = check_guests(group,guests,qty)
-        groups.append(group)
-        for player in group:
-            if player in players:
-                players.remove(player)
-
-    return groups
-
-def check_guests(group,guests,group_len):
-    result = []
-    for guest in guests:
-        if guest in group:
-            result.append(guest)
-            result.append(guest)
-            group.remove(guest)
-        if len(result) == group_len:
-            return result
-    for player in group:
-        if len(result) >= group_len:
-            break
-        result.append(player)
-    
-    return result
-            

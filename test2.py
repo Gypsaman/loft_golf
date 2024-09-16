@@ -21,8 +21,8 @@ from webproject.modules.process_emails import process_emails
 #     for player in players:
 #         print(player.id,player.first_name,player.last_name)
 
-from webproject.modules.processing import process
+from webproject.modules.loft_processing import loft_process
 
-process()
+loft_process()
 
 

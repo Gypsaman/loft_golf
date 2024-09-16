@@ -40,6 +40,10 @@ def update_week_post(id):
     week = Weeks.query.filter_by(id=id).first()
     week.start_date = dt.strptime(request.form.get('start_date'),"%Y-%m-%d")
     week.end_date = dt.strptime(request.form.get('end_date'),"%Y-%m-%d")
+    week.weekday_request = True if request.form.get('weekday_request') else False
+    week.weekend_request = True if request.form.get('weekend_request') else False
+    week.weekday_teetimes = True if request.form.get('weekday_teetimes') else False
+    week.weekend_teetimes = True if request.form.get('weekend_teetimes') else False
     week.closed = True if request.form.get('closed')  else False
     db.session.commit()
     return redirect(url_for('weeks.weeks_table'))
@@ -54,6 +58,10 @@ def add_week():
 def add_week_post():
     week = Weeks(start_date=dt.strptime(request.form.get('start_date'),"%Y-%m-%d"), 
                  end_date=dt.strptime(request.form.get('end_date'), "%Y-%m-%d"),
+                     weekday_request =  True if request.form.get('weekday_request') else False,
+                    weekend_request = True if request.form.get('weekend_request') else False,
+                    weekday_teetimes = True if request.form.get('weekday_teetimes') else False,
+                    weekend_teetimes = True if request.form.get('weekend_teetimes') else False,
                 closed=True if request.form.get('closed') else False)
     db.session.add(week)
     db.session.commit()
