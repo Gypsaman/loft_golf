@@ -15,7 +15,7 @@ from webproject.modules.process_emails import process_emails
 weekday_request = 'Friday'
 weekday_teetime = 'Monday'
 weekend_request = 'Saturday'
-weekend_teetime = 'Wednesday'
+weekend_teetime = 'Thursday'
 
 def loft_process():
     with app.app_context():
