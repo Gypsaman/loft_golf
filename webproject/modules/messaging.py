@@ -6,6 +6,21 @@ from datetime import datetime as dt
 from webproject.modules.extensions import db
 from sqlalchemy import text
 
+
+def announcements(msg,weekday,weekend):
+    sql = 'select players.first_name,players.email from Players '
+    sql += "Where Players.weekday = 1 or Players.weekend = 1 " if weekday and weekend else ""
+    sql += 'Where weekday  = 1' if weekday and not weekend else ""
+    sql += 'Where weekend = 1' if weekend and not weekday else ""
+
+    players = list(db.session.execute(text(sql)))
+    email = Email()
+    for player in players:
+        email_body = f'Dear {player.first_name},\n\n'
+        email_body += msg
+        email.send_email(player.email,"Announcement",email_body)
+
+ 
 def submission_received(submission):
 
     curr_week = submission.week

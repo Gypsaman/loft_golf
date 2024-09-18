@@ -1,0 +1,41 @@
+{% extends 'base.html' %} 
+{% block body %}
+<div class="neuro-content">
+    <h1>Add Player</h1>
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <div class="notification is-danger">
+        {{ messages[0] }}. Go to
+        <a href="{{ url_for('main.weather') }}">Weather Page</a>
+    </div>
+    {% endif %} {% endwith %}
+    <div class="neuro-form-section">
+        <form class="neuro-form"  method="POST" action="/announcements">
+            <div class="neuro-form-entry-row">
+                <label for="message">Message</label>
+                <textarea name="message" id="message" rows="10"></textarea>  
+            </div>
+
+            <div class="neuro-form-entry-row" style="margin-top: 15px;">
+                <label for="weekday">Weekday</label>
+                <input type="checkbox" name="weekday" id="weekday" >
+                <div></div><div></div><div></div>
+            </div>
+            <div class="neuro-form-entry-row">
+                <label for="weekend">Weekend</label>
+                <input type="checkbox" name="weekend" id="weekend" >
+                <div></div><div></div><div></div>
+            </div>
+            <div class="neuro-form-entry-row">
+                <div class="" style="margin-top: 40px;">
+                    <button type="submit" class="neuro-button-main">Update</button>
+                </div>
+                <div class="" style="margin-top: 40px;margin-left: 5px">
+                    <button type="button" class="neuro-button-main" onclick="window.location.href='/weather'">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>>
+    
+{% endblock %}
