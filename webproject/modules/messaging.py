@@ -52,7 +52,7 @@ def tee_time_assigned(curr_week,category):
     sql += " order by teetimes.time"
 
     teetimes = list(db.session.execute(text(sql)))
-    teetable =  tee_time_table(teetimes,golfer=True)
+    teetable =  tee_time_table(teetimes)
 
     body = f"Here are the tee times you requested, along with the other pairings "
     body += f"for {start_date.strftime('%b-%d')} to {(end_date - timedelta(days=1)).strftime('%b-%d')}:\n\n"

@@ -5,10 +5,11 @@ from sqlalchemy import text
 # import hashlib
 # from werkzeug.security import generate_password_hash
 # from datetime import datetime as dt
-from webproject.modules.loft_processing import sleep_until_midnight
+from webproject.modules.loft_processing import sleep_until_midnight, loft_process
+from webproject.modules import messaging
 
 
 with app.app_context():
-    sleep_until_midnight()
+    messaging.tee_time_assigned()
     
 
