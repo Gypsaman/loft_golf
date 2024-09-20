@@ -60,7 +60,7 @@ class Email:
     def send_multipart_email(self,recipient,subject,html,carboncopy=None) -> None:
         msg = MIMEMultipart('alternative')
         msg['From'] = self.emailAccount
-        msg['To'] = 'gypsaman@gmail.com' #recipient
+        msg['To'] = recipient
         if carboncopy is not None:
             msg['Cc'] = carboncopy
         msg['Subject'] = subject
