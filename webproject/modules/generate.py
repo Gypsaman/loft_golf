@@ -34,7 +34,7 @@ def generate(category):
                 tee_time_player = TeeTimePlayers(player_id=player,tee_time_id=tee_time.id)
                 db.session.add(tee_time_player)
         db.session.commit()
-    # messaging.tee_time_assigned(curr_week,category)
+    messaging.tee_time_assigned(curr_week,category)
 
 def group_requests(players,guests):
     import random
