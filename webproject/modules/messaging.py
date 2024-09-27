@@ -155,6 +155,8 @@ def tee_times_available(curr_week,category):
         email.send_multipart_email(player.email,'Tee Times Available',email_body,carboncopy='gypsaman@gmail.com')
 
 
+
+
 def tee_avail_table(teetimes,email_body):
     dates_avail = {}
     for teetime in teetimes:
@@ -162,6 +164,7 @@ def tee_avail_table(teetimes,email_body):
         if day not in dates_avail:
             dates_avail[day]  = []
         dates_avail[day].append(teetime.time.strftime('%H:%M'))
+
 
     html = '<table>'+'\n'
     html += '<tbody>'+'\n'
@@ -189,6 +192,10 @@ def tee_avail_table(teetimes,email_body):
     html += '</tbody>'+'\n'
 
     html += '</table>'+'\n'
+
+    if len(dates_avail) == 0:
+        html += '<h1>NO TEE TIMES AVAILABLE</h1>'
+
 
     return html
 
