@@ -149,7 +149,7 @@ def tee_times_available(curr_week,category):
         email_body = f'<p>{player.first_name},\n\n</p>'
         email_body += f'<p>{body}</p>'
         email_body += '<p>\nPlease follow the link below to request your tee times\n\n</p>'
-        email_body += f'<a href="loft.neurodna.xyz/requests/{category}/{player.access_code} " >loft.neurodna.xyz/requests/{category}/{player.access_code}</a>'
+        email_body += f'<a href="https://loft.neurodna.xyz/requests/{category}/{player.access_code} " >loft.neurodna.xyz/requests/{category}/{player.access_code}</a>'
         email_body += '<p>\n\n</p>'
         email_body +=  tee_avail_table(teetimes,email_body)
         email.send_multipart_email(player.email,'Tee Times Available',email_body,carboncopy='gypsaman@gmail.com')
