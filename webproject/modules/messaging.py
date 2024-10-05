@@ -125,7 +125,7 @@ def tee_time_table(teetimes):
 
 def tee_times_available(curr_week,category):
     start = 0 if category == 'weekday' else 4
-    end = 3 if category == 'weekday' else 6
+    end = 3 if category == 'weekday' else 7
     start_date = curr_week.start_date  + timedelta(days=start)
     end_date = curr_week.start_date + timedelta(days=end)
 
@@ -139,7 +139,6 @@ def tee_times_available(curr_week,category):
 
     body = f"Here are the tee times availables "
     body += f"for {start_date.strftime('%b-%d')} to {(end_date - timedelta(days=1)).strftime('%b-%d')}:\n\n"
-
 
     email = Email()
     sql = "Select players.first_name, players.last_name, players.email, players.access_code from Players"
