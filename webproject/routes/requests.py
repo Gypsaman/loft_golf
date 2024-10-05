@@ -46,9 +46,9 @@ def player_request(category,access_code):
         db.session.add(request)
         db.session.commit()
 
-    
+    dates = [(curr_week.start_date + timedelta(days=i)).strftime("%b/%d") for i in range(7)]
     return render_template("requests/player_request.html", 
-                           player=player,days=days,curr_week=curr_week,request=request,category=category)
+                           player=player,days=days,curr_week=curr_week,dates=dates,request=request,category=category)
 
 @requests.route('/requests/update/<category>/<int:id>', methods=['GET'])
 @login_required
