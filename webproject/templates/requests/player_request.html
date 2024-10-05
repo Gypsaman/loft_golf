@@ -11,13 +11,14 @@
         <a href="{{ url_for('main.weather') }}">Weather Page</a>
     </div>
     {% endif %} {% endwith %}
-    <div class="neuro-form-section">
+    <div class="neuro-form-section" style="min-width: 400px;">
         <form class="neuro-form"  method="POST" action="/requests/update/{{category}}/{{request.id}}">
             <div class = "neuro-form-entry-row" style="border-bottom: 2px solid black">
-                <p style="min-width: 70px;">Day</p>
-                <p>Spots Left</p>
-                <p>Request</p>
-                <p>Guest?</p>
+                <p style="min-width: 140px;">Day</p>
+                <p>                    </p>
+                <p>Spots </p>
+                <p>Request </p>
+                <p>Guest? </p>
             </div>
             <div>
 
@@ -45,7 +46,7 @@
             {% endif %}
             {% if 'Thursday' in days %}
             <div class="neuro-form-entry-row">
-                <p style="min-width: 70px;">Thursday</p>p>{{dates[2]}}</p>
+                <p style="min-width: 70px;">Thursday</p><p>{{dates[2]}}</p>
                 <p tyle="min-width: 20px; content-aling:right">{{days['Thursday']}}</p>
                 <input type="checkbox" name="thursday" id="thursday" {{"checked" if request.Thursday}} {% if days['Thursday'] <= 0 and not request.Thursday %}disabled{% endif %}>
                 <input type="checkbox" name="thursday_guest" id="thursday_guest" {{"checked" if request.Thursday_guest}} {% if days['Thursday'] <= 1 and not request.Thursday_guest %}disabled{% endif %}>
@@ -55,7 +56,7 @@
             {% endif %}
             {% if 'Friday' in days %}
             <div class="neuro-form-entry-row">
-                <p style="min-width: 70px;">Friday</p>p>{{dates[3]}}</p>
+                <p style="min-width: 70px;">Friday</p><p>{{dates[3]}}</p>
                 <p tyle="min-width: 20px; content-aling:right">{{days['Friday']}}</p>
                 <input type="checkbox" name="friday" id="friday" {{"checked" if request.Friday}} {% if days['Friday'] <= 0 and not request.Friday %}disabled{% endif %}>
                 <input type="checkbox" name="friday_guest" id="friday_guest" {{"checked" if request.Friday_guest}} {% if days['Friday'] <= 1 and not request.Friday_guest %}disabled{% endif %}>
@@ -67,7 +68,7 @@
             {% if category=='weekend' %}
             {% if 'Saturday' in days %}
                 <div class="neuro-form-entry-row">
-                    <p style="min-width: 70px;">Saturday</p>p>{{dates[4]}}</p>
+                    <p style="min-width: 70px;">Saturday</p><p>{{dates[4]}}</p>
                     <p tyle="min-width: 20px; content-aling:right">{{days['Saturday']}}</p>
                     <input type="checkbox" name="saturday" id="saturday" {{"checked" if request.Saturday}} {% if days['Saturday'] <= 0 and not request.Saturday %}disabled{% endif %}>
                     <!-- <label for="saturday">Saturday</label>
@@ -79,7 +80,7 @@
             {% endif %}
             {% if 'Sunday' in days %}
                 <div class="neuro-form-entry-row">
-                    <p style="min-width: 70px;">Sunday</p>p>{{dates[5]}}</p>
+                    <p style="min-width: 70px;">Sunday</p><p>{{dates[5]}}</p>
                     <p tyle="min-width: 20px; content-aling:right">{{days['Sunday']}}</p>
                     <input type="checkbox" name="sunday" id="sunday" {{"checked" if request.Sunday}} {% if days['Sunday'] <= 0 and not request.Sunday %}disabled{% endif %}>
                     <input type="checkbox" name="sunday_guest" id="sunday_guest" {{"checked" if request.Sunday_guest}} {% if days['Sunday'] <= 1 and not request.Sunday_guest %}disabled{% endif %}>
@@ -89,7 +90,7 @@
             {% endif %}
             {% if 'Monday' in days %}
             <div class="neuro-form-entry-row">
-                <p style="min-width: 70px;">Monday</p>p>{{dates[6]}}</p>
+                <p style="min-width: 70px;">Monday</p><p>{{dates[6]}}</p>
                 <p tyle="min-width: 20px; content-aling:right">{{days['Monday']}}</p>
                 <input type="checkbox" name="monday" id="monday" {{"checked" if request.Monday}} {% if days['Monday'] <= 0 and not request.Monday %}disabled{% endif %}>
                 <input type="checkbox" name="monday_guest" id="monday_guest" {{"checked" if request.Monday_guest}} {% if days['Monday'] <= 1 and not request.Monday_guest %}disabled{% endif %}>
