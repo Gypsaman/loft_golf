@@ -40,7 +40,7 @@ def submission_received(submission):
 
 def tee_time_assigned(curr_week,category):
     start = 0 if category == 'weekday' else 4
-    end = 3 if category == 'weekday' else 6
+    end = 3 if category == 'weekday' else 7
     start_date = curr_week.start_date  + timedelta(days=start)
     end_date = curr_week.start_date + timedelta(days=end)
 
