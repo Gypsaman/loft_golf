@@ -92,7 +92,12 @@ def generate_requests(category):
     
     return redirect(url_for('teetimes.pairings',page=1))
 
+@requests.route('/requests/email/<category>')
+@login_required
+def email_requests(category):
+    messaging.tee_times_available(get_curr_week(),category)
 
+    return redirect(url_for('requests.view_requests'))
 
 @requests.route('/requests')
 @login_required
