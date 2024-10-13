@@ -142,7 +142,7 @@ def tee_times_available(curr_week,category):
 
     email = Email()
     sql = "Select players.first_name, players.last_name, players.email, players.access_code from Players"
-    sql += f" where {category} "
+    sql += f" where {category} and players.active = 1"
     players = list(db.session.execute(text(sql)))
     for player in players:
         email_body = f'<p>{player.first_name},\n\n</p>'

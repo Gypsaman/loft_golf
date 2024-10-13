@@ -1,16 +1,16 @@
 from flask import Blueprint, redirect, render_template,  request, url_for, flash
 from flask_login import login_required
 from webproject.modules.extensions import db
-from webproject.models import TeeTimes, Weeks, Players, TeeRequests, TeeTimePlayers
+from webproject.models import TeeTimes, Players, TeeRequests
 from datetime import datetime as dt
 from datetime import timedelta
 from collections import Counter
 from sqlalchemy import func
-from webproject.modules.table_creator import Field, TableCreator, true_false, time_to_day_time
+from webproject.modules.table_creator import Field, TableCreator, true_false
 from webproject.modules import messaging
 from webproject.modules.utils import get_curr_week,day_order
 from webproject.modules.generate import generate
-from sqlalchemy import text
+
 
 
 requests = Blueprint('requests', __name__)
